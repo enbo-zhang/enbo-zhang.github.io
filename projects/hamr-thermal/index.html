@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-5r0ceAi77ofyhKluuUBJUzdOIMc4aEZR9Xlgif5W6zg=' 'sha256-qPX4BtIQ1eOif35UrDZ7IRTYyquZhpJFLSPXLKWkf84='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Keeping the heat in the grain — Enbo Zhang</title>
+  <meta name="description" content="Heat-assisted magnetic recording, FePt media walled by h-BN, and a 3ω measurement of how little heat crosses an FePt/h-BN interface. A project by Enbo Zhang.">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Keeping the heat in the grain — Enbo Zhang">
+  <meta property="og:description" content="Heat-assisted magnetic recording, FePt media walled by h-BN, and a 3ω measurement of how little heat crosses an FePt/h-BN interface.">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000'/%3E%3Ccircle cx='32' cy='32' r='20' fill='%23781c6d'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23ed6925'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23fcffa4'/%3E%3C/svg%3E">
+  <script>document.documentElement.className='js';</script>
+  <script type="importmap">{"imports":{"three":"../../assets/vendor/three/build/three.module.js","three/addons/":"../../assets/vendor/three/examples/jsm/"}}</script>
+  <link rel="modulepreload" href="../../assets/vendor/three/build/three.module.js">
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/site.css">
+  <script type="module" src="../../assets/js/site.js"></script>
+</head>
+<body class="page-project page-hamr">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="gnav">
+    <nav class="gnav__inner" aria-label="Main">
+      <a class="gnav__name" href="../../index.html">Enbo Zhang</a>
+      <a class="gnav__home" href="../../index.html">Home</a>
+    </nav>
+    <nav class="gnav__rail" aria-label="Sections">
+      <a class="rail__seg" href="#overview"><span class="rail__label"><span class="rail__num">00</span> Intro</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#ch-hamr"><span class="rail__label"><span class="rail__num">01</span> HAMR</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#ch-media"><span class="rail__label"><span class="rail__num">02</span> Media</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#ch-measure"><span class="rail__label"><span class="rail__num">03</span> Measurement</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#paper"><span class="rail__label"><span class="rail__num">04</span> Paper</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section id="overview" class="hero hero--project" aria-labelledby="hero-title">
+      <p class="eyebrow lab-label"><span class="lab-index">[P-02]</span> Heat-assisted magnetic recording</p>
+      <h1 class="hero__title" id="hero-title">Keeping the heat in the grain.</h1>
+      <p class="hero__sub">To write the next generation of hard drives, you heat a few nanometre-sized grains for a nanosecond. Here is how little of that heat gets past a sheet of h-BN.</p>
+      <div class="cta-row">
+        <a class="btn btn--primary" href="#ch-hamr">Watch it work</a>
+        <a class="btn btn--secondary" href="#paper">Read the paper</a>
+      </div>
+      <dl class="hero__spec hero__spec--3">
+        <div><dt>Authors</dt><dd>Chengchao Xu, <strong>Enbo Zhang</strong>, Bo-Yuan Yang, B. S. D. Ch. S. Varaprasad, David E. Laughlin, Jian-Gang Zhu</dd></div>
+        <div><dt>Published</dt><dd>IEEE Transactions on Magnetics</dd><dd>Carnegie Mellon University</dd></div>
+      </dl>
+      <div class="hero__cue" aria-hidden="true">Scroll</div>
+    </section>
+
+    <!-- Statement -->
+    <section id="statement" class="section statement" aria-labelledby="statement-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <h2 class="headline headline--display" id="statement-title">A sharp bit needs a sharp hot spot.</h2>
+          <p class="subhead">Heat that leaks sideways blurs the edge of every bit. Walls of h-BN between the grains could stop it — if heat really struggles to cross them. We measured how much it does.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 1: HAMR -->
+    <section id="ch-hamr" class="section chapter" aria-labelledby="ch-hamr-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow c-heat">Chapter 1</p>
+          <h2 class="headline" id="ch-hamr-title">Writing with heat.</h2>
+          <p class="subhead">A laser, a gold antenna and a magnet, all on a slider flying nanometres above the disk.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-write" data-pace="0:0 0.09:0.095 0.21:0.289 0.32:0.538 0.44:0.633 0.53:0.703 0.72:0.809 0.87:0.935 1:1" class="scene" data-scene="hamr-write" aria-labelledby="scene-write-title">
+      <h2 class="visually-hidden" id="scene-write-title">How heat-assisted magnetic recording writes a bit</h2>
+      <div class="scene__sticky">
+        <canvas class="scene__canvas" aria-hidden="true"></canvas>
+        <div class="scene__fade scene__fade--top"></div>
+        <div class="scene__fade scene__fade--bottom"></div>
+        <div class="scene__beats">
+          <div class="beat beat--bottom" data-start="0.02" data-end="0.20">
+            <p class="beat__eyebrow">The drive</p>
+            <h3 class="beat__title">A head, flying over a spinning disk.</h3>
+            <p class="beat__text">The slider rides on a cushion of air, nanometres above the surface. Everything that writes a bit sits at its trailing edge.</p>
+          </div>
+          <div class="beat beat--bottom" data-start="0.24" data-end="0.44">
+            <p class="beat__eyebrow">Laser to antenna</p>
+            <h3 class="beat__title">Light, squeezed below its own size.</h3>
+            <p class="beat__text">A laser diode feeds a waveguide down to a <span class="c-gold">near-field transducer</span>: a tiny gold antenna that focuses the light into a spot far smaller than its wavelength.</p>
+          </div>
+          <div class="beat beat--bottom" data-start="0.48" data-end="0.74">
+            <p class="beat__eyebrow">Heat, write, freeze</p>
+            <h3 class="beat__title">Too stable to write — until it's <span class="c-heat">hot</span>.</h3>
+            <p class="beat__text">FePt grains hold their magnetization so firmly that no head field can flip them at room temperature. The spot heats a few grains past their Curie point, the write pole sets them, and they freeze as they cool.</p>
+          </div>
+          <div class="beat beat--bottom" data-start="0.78" data-end="1.00">
+            <p class="beat__eyebrow">The thermal gradient</p>
+            <h3 class="beat__title">The edge of the heat is the edge of the bit.</h3>
+            <p class="beat__text">Each bit freezes where the temperature falls through the Curie point. The steeper that fall, the sharper and more evenly placed the bits.</p>
+          </div>
+        </div>
+        <div class="scene__fallback">
+          <p>The interactive 3D view isn't available in this browser. In heat-assisted magnetic recording, a laser on the slider feeds a gold near-field transducer that heats a few grains of FePt media past their Curie point; the write pole sets their magnetization and the bits freeze as the grains cool.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 2: Media -->
+    <section id="ch-media" class="section chapter" aria-labelledby="ch-media-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow c-hbn">Chapter 2</p>
+          <h2 class="headline" id="ch-media-title">A medium with walls of h-BN.</h2>
+          <p class="subhead">Grains of FePt, each wrapped in a few atomic sheets of hexagonal boron nitride.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-media" data-pace="0:0 0.2:0.142 0.31:0.33 0.46:0.44 0.57:0.636 0.64:0.69 0.78:0.81 0.9:0.937 1:1" class="scene scene--has-controls" data-scene="hamr-media" aria-labelledby="scene-media-title">
+      <h2 class="visually-hidden" id="scene-media-title">How h-BN grain boundaries keep the hot spot sharp</h2>
+      <div class="scene__sticky">
+        <canvas class="scene__canvas" aria-hidden="true"></canvas>
+        <div class="scene__fade scene__fade--top"></div>
+        <div class="scene__fade scene__fade--bottom"></div>
+        <div class="scene__beats">
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.02" data-end="0.22">
+            <p class="beat__eyebrow">The film</p>
+            <h3 class="beat__title">Billions of tiny magnets.</h3>
+            <p class="beat__text">The recording layer is a mosaic of columnar FePt grains, each magnetized up or down. Underneath, a heat sink pulls heat away.</p>
+          </div>
+          <div class="beat beat--top-left beat--flip beat--top-mobile" data-start="0.27" data-end="0.48">
+            <p class="beat__eyebrow">Inside a grain</p>
+            <h3 class="beat__title">Ordered metal, layered walls.</h3>
+            <p class="beat__text">In L1₀ FePt, iron and platinum stack in alternating atomic planes — the source of its huge stability. Between the grains, <span class="c-hbn">h-BN</span> lies in thin, layered sheets.</p>
+          </div>
+          <div class="beat beat--top-left beat--flip beat--top-mobile" data-start="0.52" data-end="0.78">
+            <p class="beat__eyebrow">Heat it</p>
+            <h3 class="beat__title">Heat goes down, not sideways.</h3>
+            <p class="beat__text">h-BN carries heat well along its sheets but poorly across them. Walled in, the heated grains dump their heat into the sink below instead of warming their neighbours.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact beat--corner-bl" data-start="0.82" data-end="1.00">
+            <p class="beat__eyebrow">Compare</p>
+            <h3 class="beat__title">h-BN or carbon?</h3>
+            <p class="beat__text">With a conventional carbon boundary, heat spreads sideways and the hot spot's edge goes soft.</p>
+          </div>
+        </div>
+        <div class="scene__controls" data-show-from="0.82">
+          <div class="segmented" role="radiogroup" aria-label="Grain boundary" data-param="boundary" data-target="#scene-media" data-seed="false" data-reset="auto" data-caption="#boundary-caption">
+            <span class="segmented__thumb" aria-hidden="true"></span>
+            <button type="button" role="radio" aria-checked="true" data-value="hbn" data-caption-text="h-BN walls: a tight hot spot.">h-BN</button>
+            <button type="button" role="radio" aria-checked="false" data-value="carbon" data-caption-text="Carbon boundaries: heat leaks sideways.">Carbon</button>
+          </div>
+          <p class="scene__controls-caption" id="boundary-caption" aria-live="polite">h-BN walls: a tight hot spot.</p>
+        </div>
+        <div class="scene__fallback">
+          <p>The interactive 3D view isn't available in this browser. The recording layer is made of columnar L1₀ FePt grains separated by layered h-BN. Because heat crosses h-BN sheets poorly, a heated grain sends its heat down into the heat sink rather than sideways into its neighbours, keeping the hot spot sharp.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 3: Measurement -->
+    <section id="ch-measure" class="section chapter" aria-labelledby="ch-measure-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow c-gold">Chapter 3</p>
+          <h2 class="headline" id="ch-measure-title">Measuring heat across a few atoms.</h2>
+          <p class="subhead">Stack the interface many times over, then time how heat gets through it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-measure" data-pace="0:0 0.18:0.127 0.3:0.225 0.44:0.323 0.56:0.441 0.68:0.526 0.735:0.689 0.785:0.863 1:1" class="scene" data-scene="three-omega" aria-labelledby="scene-measure-title">
+      <h2 class="visually-hidden" id="scene-measure-title">The differential 3ω measurement of an h-BN/FePt multilayer</h2>
+      <div class="scene__sticky">
+        <canvas class="scene__canvas" aria-hidden="true"></canvas>
+        <div class="scene__fade scene__fade--top"></div>
+        <div class="scene__fade scene__fade--bottom"></div>
+        <div class="scene__beats">
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.02" data-end="0.20">
+            <p class="beat__eyebrow">The sample</p>
+            <h3 class="beat__title">One interface, repeated.</h3>
+            <p class="beat__text">Thin h-BN and L1₀ FePt layers, sputtered in turn on silicon. More periods means more interfaces for the heat to cross. A gold heater line sits on top.</p>
+          </div>
+          <div class="beat beat--bottom beat--top-mobile" data-start="0.24" data-end="0.44">
+            <p class="beat__eyebrow">The 3ω method</p>
+            <h3 class="beat__title">Drive at ω. Heat at 2ω. Listen at 3ω.</h3>
+            <p class="beat__text">An AC current heats the line twice per cycle. Its resistance follows the temperature, so a faint voltage appears at three times the drive frequency — a thermometer built into the heater.</p>
+          </div>
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.48" data-end="0.68">
+            <p class="beat__eyebrow">Differential</p>
+            <h3 class="beat__title">Same heater, with and without the film.</h3>
+            <p class="beat__text">A reference chip without the multilayer runs side by side. The extra temperature rise on the sample is the film's thermal resistance, and its growth with the number of periods isolates the interfaces.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact beat--corner-br" data-start="0.79" data-end="1.00">
+            <p class="beat__eyebrow">At the interface</p>
+            <h3 class="beat__title">Heat bounces off a van der Waals gap.</h3>
+            <p class="beat__text">h-BN binds to FePt only weakly. Most lattice vibrations reach the gap and reflect, so very little heat crosses each interface.</p>
+          </div>
+        </div>
+        <div class="scene__fallback">
+          <p>The interactive 3D view isn't available in this browser. A gold heater line on an [h-BN/FePt]×N multilayer is driven by AC current at ω; it heats at 2ω and its 3ω voltage gives the temperature rise. Comparing with a reference chip without the multilayer gives the film's thermal resistance. Weak van der Waals bonding at the h-BN/FePt interfaces reflects most lattice vibrations.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section id="results" class="section microscope" aria-labelledby="results-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow">The result</p>
+          <h2 class="headline" id="results-title">Very little heat gets through.</h2>
+          <p class="subhead">Mostly metal, yet across the stack it conducts heat less well than window glass.</p>
+        </div>
+        <div class="tiles" data-reveal-group>
+          <div class="tile tile--3 stat">
+            <p class="stat__label">Effective conductivity, cross-plane</p>
+            <p class="stat__value c-heat">0.60 W/m·K</p>
+            <p class="stat__note">For the [h-BN/FePt] multilayer, from differential 3ω measurements.</p>
+          </div>
+          <div class="tile tile--3 stat">
+            <p class="stat__label">Interface conductance</p>
+            <p class="stat__value c-hbn">≈ 68 MW/m²·K</p>
+            <p class="stat__note">Across FePt / h-BN / FePt at room temperature: weak van der Waals bonding.</p>
+          </div>
+          <div class="tile tile--2 stat">
+            <p class="stat__label">Stack</p>
+            <p class="stat__value">h-BN / L1₀ FePt</p>
+            <p class="stat__note">Nanometre-thin layers, repeated 4 to 13 times on silicon.</p>
+          </div>
+          <div class="tile tile--2 stat">
+            <p class="stat__label">Method</p>
+            <p class="stat__value c-gold">Differential 3ω</p>
+            <p class="stat__note">A heater that is also its own thermometer, against a reference chip.</p>
+          </div>
+          <div class="tile tile--2 stat tile--wide-md">
+            <p class="stat__label">For HAMR</p>
+            <p class="stat__value">Isolated grains</p>
+            <p class="stat__note">Data for designing media whose grains keep their heat to themselves.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Paper -->
+    <section id="paper" class="section paper" aria-labelledby="paper-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow">The paper</p>
+          <h2 class="headline" id="paper-title">Ultralow thermal conductance across the [FePt/h-BN/FePt] interface.</h2>
+          <p class="subhead">C. Xu, E. Zhang, B.-Y. Yang, B. S. D. Ch. S. Varaprasad, D. E. Laughlin, J.-G. Zhu. IEEE Transactions on Magnetics.</p>
+          <div class="cta-row">
+            <a class="btn btn--primary" href="https://ieeexplore.ieee.org/abstract/document/10716709" rel="noopener noreferrer" target="_blank">IEEE Xplore</a>
+            <a class="btn btn--secondary" href="https://arxiv.org/abs/2406.13085" rel="noopener noreferrer" target="_blank">arXiv preprint</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Role -->
+    <section id="role" class="section role" aria-labelledby="role-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow">My role</p>
+          <h2 class="headline" id="role-title">Co-author, at the Data Storage Systems Center.</h2>
+          <p class="subhead">Part of the Carnegie Mellon team developing FePt-(h-BN) media for heat-assisted recording.</p>
+        </div>
+        <div class="tiles" data-reveal-group>
+          <div class="tile tile--6 role-block">
+            <ul class="role-list">
+              <li><span class="role-list__tag c-heat">Recording physics</span><span class="role-list__item">From media to the thermal gradient.</span></li>
+              <li><span class="role-list__tag c-gold">Thermal metrology</span><span class="role-list__item">Heat, measured electrically.</span></li>
+              <li><span class="role-list__tag c-hbn">2D materials on metal</span><span class="role-list__item">Where van der Waals meets FePt.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next -->
+    <section id="next" class="section next" aria-labelledby="next-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <h2 class="headline" id="next-title">Want the details?</h2>
+          <p class="subhead">I'm happy to walk through HAMR, the media or the measurement.</p>
+          <div class="cta-row">
+            <a class="btn btn--primary" href="../../index.html#contact">Get in touch</a>
+            <a class="btn btn--secondary" href="../../index.html#work">Back to all work</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="gfoot">
+    <div class="container">
+      <ul class="gfoot__links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="mailto:zebmail1@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/enbo-zhang-559964148/" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+      </ul>
+      <div class="gfoot__row">
+        <p>© 2026 Enbo Zhang.</p>
+        <p>Built by hand with HTML, CSS and Three.js.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

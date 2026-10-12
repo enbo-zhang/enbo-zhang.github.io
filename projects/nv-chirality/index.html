@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-5r0ceAi77ofyhKluuUBJUzdOIMc4aEZR9Xlgif5W6zg=' 'sha256-qPX4BtIQ1eOif35UrDZ7IRTYyquZhpJFLSPXLKWkf84='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Seeing the handedness of spin waves — Enbo Zhang</title>
+  <meta name="description" content="A scanning quantum microscope that reads a spin wave's direction at a single point, by its handedness. A project by Enbo Zhang.">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Seeing the handedness of spin waves — Enbo Zhang">
+  <meta property="og:description" content="A scanning quantum microscope that reads a spin wave's direction at a single point, by its handedness. A project by Enbo Zhang.">
+  <meta property="og:image" content="../../assets/img/portrait.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2364d2ff' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='12' fill='none' stroke='%23ff375f' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff3b30'/%3E%3C/svg%3E">
+  <script>document.documentElement.className='js';</script>
+  <script type="importmap">{"imports":{"three":"../../assets/vendor/three/build/three.module.js","three/addons/":"../../assets/vendor/three/examples/jsm/"}}</script>
+  <link rel="modulepreload" href="../../assets/vendor/three/build/three.module.js">
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/site.css">
+  <script type="module" src="../../assets/js/site.js"></script>
+</head>
+<body class="page-project">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="gnav">
+    <nav class="gnav__inner" aria-label="Main">
+      <a class="gnav__name" href="../../index.html">Enbo Zhang</a>
+      <a class="gnav__home" href="../../index.html">Home</a>
+    </nav>
+    <nav class="gnav__rail" aria-label="Sections">
+      <a class="rail__seg" href="#overview"><span class="rail__label"><span class="rail__num">00</span> Intro</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <div class="rail__group" role="group" aria-label="Physics">
+        <a class="rail__head" href="#ch-sensor"><span class="rail__label"><span class="rail__num">01</span> Physics</span><span class="rail__track rail__track--none"></span></a>
+        <a class="rail__seg rail__seg--sub" href="#ch-sensor"><span class="rail__label"><span class="rail__pre">Physics · </span>Sensor</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+        <a class="rail__seg rail__seg--sub" href="#ch-waves"><span class="rail__label"><span class="rail__pre">Physics · </span>Spin waves</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+        <a class="rail__seg rail__seg--sub" href="#ch-detect"><span class="rail__label"><span class="rail__pre">Physics · </span>Detection</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+        <a class="rail__seg rail__seg--sub" href="#playground"><span class="rail__label"><span class="rail__pre">Physics · </span>Try it</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      </div>
+      <a class="rail__seg" href="#microscope"><span class="rail__label"><span class="rail__num">02</span> Instrument</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#role"><span class="rail__label"><span class="rail__num">03</span> My role</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- 1. Hero -->
+    <section id="overview" class="hero hero--project" aria-labelledby="hero-title">
+      <p class="eyebrow lab-label"><span class="lab-index">[P-01]</span> Chirality-resolved quantum sensing</p>
+      <h1 class="hero__title" id="hero-title">Seeing the handedness of spin waves.</h1>
+      <p class="hero__sub">A single quantum spin in diamond can tell which way a magnetic wave is turning — and so which way it is going.</p>
+      <div class="cta-row">
+        <a class="btn btn--primary" href="#ch-sensor">Watch it work</a>
+        <a class="btn btn--secondary" href="#microscope">See the instrument</a>
+      </div>
+      <dl class="hero__spec hero__spec--3">
+        <div><dt>Authors</dt><dd><strong>Enbo Zhang</strong>, Tiancheng Zheng, Bo-Yuan Yang, Shreyes Nallan, Mark Ku, Jian-Gang Zhu</dd></div>
+        <div><dt>Affiliation</dt><dd>Carnegie Mellon University</dd></div>
+        <div><dt>Resource</dt><dd><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=Yu6iXkMAAAAJ&amp;citation_for_view=Yu6iXkMAAAAJ:zYLM7Y9cAGgC" rel="noopener noreferrer" target="_blank">PhD thesis <span aria-hidden="true">↗</span></a></dd></div>
+      </dl>
+      <div class="hero__cue" aria-hidden="true">Scroll</div>
+    </section>
+
+    <!-- 2. Statement -->
+    <section id="statement" class="section statement" aria-labelledby="statement-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <h2 class="headline headline--display" id="statement-title">Read a spin wave's direction at a single point.</h2>
+          <p class="subhead">No phase reference. No interferometer. Just the colour of the light from one atom-sized sensor.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Chapter 1 -->
+    <section id="ch-sensor" class="section chapter" aria-labelledby="ch-sensor-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow c-nv">Chapter 1</p>
+          <h2 class="headline" id="ch-sensor-title">A quantum sensor, inside a diamond.</h2>
+          <p class="subhead">One missing atom turns a crystal into a compass for microwaves.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Scene 1 -->
+    <section id="scene-nv" class="scene" data-scene="nv-diamond" aria-labelledby="scene-nv-title">
+      <h2 class="visually-hidden" id="scene-nv-title">How the NV centre senses handedness</h2>
+      <div class="scene__sticky">
+        <canvas class="scene__canvas" aria-hidden="true"></canvas>
+        <div class="scene__fade scene__fade--top"></div>
+        <div class="scene__fade scene__fade--bottom"></div>
+        <div class="scene__beats">
+          <div class="beat beat--bottom" data-start="0.02" data-end="0.22">
+            <p class="beat__eyebrow">Nitrogen + vacancy</p>
+            <h3 class="beat__title">A flaw, on purpose.</h3>
+            <p class="beat__text">Replace one carbon with nitrogen, leave its neighbour empty, and the diamond holds a single quantum spin: the NV centre.</p>
+          </div>
+          <div class="beat beat--bottom" data-start="0.27" data-end="0.44">
+            <p class="beat__eyebrow">Light in, light out</p>
+            <h3 class="beat__title">Green in. <span class="nv-glow">Red</span> out.</h3>
+            <p class="beat__text">A green laser makes the NV centre glow red. How brightly it glows reveals the state of its spin.</p>
+          </div>
+          <div class="beat beat--bottom" data-start="0.48" data-end="0.60">
+            <p class="beat__eyebrow">Same B · same frequency</p>
+            <h3 class="beat__title">Same frequency, opposite hands.</h3>
+            <p class="beat__text">The same NV centre, shown twice: same magnetic field B, same microwave frequency, tuned to the |0⟩ → |+1⟩ line. Only the handedness of the field differs: <span class="sigma-minus">σ−</span> in one view, <span class="sigma-plus">σ+</span> in the other.</p>
+          </div>
+          <div class="beat beat--bottom" data-start="0.62" data-end="0.73">
+            <p class="beat__eyebrow">Tuned to |0⟩ → |+1⟩</p>
+            <h3 class="beat__title">One stays bright. One dims.</h3>
+            <p class="beat__text">The <span class="sigma-minus">left-handed (σ−)</span> field cannot drive |0⟩ → |+1⟩, so its glow stays bright. The <span class="sigma-plus">right-handed (σ+)</span> field can, and the glow dims.</p>
+          </div>
+          <div class="beat beat--bottom" data-start="0.77" data-end="1.00">
+            <p class="beat__eyebrow">Tuned to |0⟩ → |−1⟩</p>
+            <h3 class="beat__title">Retune, and the roles swap.</h3>
+            <p class="beat__text">Tune the frequency to the |0⟩ → |−1⟩ line instead. Now the <span class="sigma-minus">σ−</span> field dims the glow and the <span class="sigma-plus">σ+</span> field does nothing. The NV centre is a built-in chirality analyser.</p>
+          </div>
+        </div>
+        <div class="scene__fallback">
+          <p>The interactive 3D view isn't available in this browser, so here is the story in words.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Chapter 2 -->
+    <section id="ch-waves" class="section chapter" aria-labelledby="ch-waves-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow c-yig">Chapter 2</p>
+          <h2 class="headline" id="ch-waves-title">Spin waves have a handedness.</h2>
+          <p class="subhead">Ripples of magnetism carry information without moving any charge.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Scene 2 -->
+    <section id="scene-waves" class="scene" data-scene="spinwave-yig" aria-labelledby="scene-waves-title">
+      <h2 class="visually-hidden" id="scene-waves-title">How spin waves carry a handedness</h2>
+      <div class="scene__sticky">
+        <canvas class="scene__canvas" aria-hidden="true"></canvas>
+        <div class="scene__fade scene__fade--top"></div>
+        <div class="scene__fade scene__fade--bottom"></div>
+        <div class="scene__beats">
+          <div class="beat beat--top-left" data-start="0.02" data-end="0.22">
+            <p class="beat__eyebrow">The stage</p>
+            <h3 class="beat__title">A magnetic film, and an antenna.</h3>
+            <p class="beat__text">A thin film of yttrium iron garnet (YIG) sits under a gold stripline. A magnetic field, B, points along the stripline.</p>
+          </div>
+          <div class="beat beat--top-left" data-start="0.27" data-end="0.52">
+            <p class="beat__eyebrow">Launch</p>
+            <h3 class="beat__title">Pulse the antenna. Waves go both ways.</h3>
+            <p class="beat__text">The magnetization starts to precess, and the precession travels outward as a spin wave.</p>
+          </div>
+          <div class="beat beat--top-left" data-start="0.57" data-end="0.82">
+            <p class="beat__eyebrow">Above the film</p>
+            <h3 class="beat__title">Each direction turns its own way.</h3>
+            <p class="beat__text">Above the film, each wave's magnetic field rotates. Waves heading left turn <span class="sigma-plus">right-handed (σ+)</span>; waves heading right turn <span class="sigma-minus">left-handed (σ−)</span>.</p>
+          </div>
+          <div class="beat beat--bottom" data-start="0.86" data-end="1.00">
+            <p class="beat__eyebrow">Side view</p>
+            <h3 class="beat__title">Direction, written as rotation.</h3>
+            <p class="beat__text">Look along B and it's plain: the sense of rotation encodes where the wave is going.</p>
+          </div>
+        </div>
+        <div class="scene__fallback">
+          <p>The interactive 3D view isn't available in this browser, so here is the story in words.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Chapter 3 -->
+    <section id="ch-detect" class="section chapter" aria-labelledby="ch-detect-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow">Chapter 3</p>
+          <h2 class="headline" id="ch-detect-title">Reading direction at a single point.</h2>
+          <p class="subhead">Put the sensor on a scanning tip, hover it over the waves, and watch which colour goes dark.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Scene 3 -->
+    <section id="scene-detect" class="scene scene--has-controls" data-scene="nv-detect" aria-labelledby="scene-detect-title">
+      <h2 class="visually-hidden" id="scene-detect-title">Detecting spin-wave direction with a scanning NV probe</h2>
+      <div class="scene__sticky">
+        <canvas class="scene__canvas" aria-hidden="true"></canvas>
+        <div class="scene__fade scene__fade--top"></div>
+        <div class="scene__fade scene__fade--bottom"></div>
+        <div class="scene__beats">
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.02" data-end="0.26">
+            <p class="beat__eyebrow">The probe</p>
+            <h3 class="beat__title">A quantum spin on a scanning tip.</h3>
+            <p class="beat__text">The NV centre sits at the apex of a diamond probe, hovering just above the film.</p>
+          </div>
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.31" data-end="0.58">
+            <p class="beat__eyebrow">Scan</p>
+            <h3 class="beat__title">Left of the antenna: <span class="sigma-plus">σ+</span>. Right: <span class="sigma-minus">σ−</span>.</h3>
+            <p class="beat__text">Fix the microwave on the <span class="sigma-plus">σ+</span> line and scan across the stripline: the NV dims on the left and stays bright on the right. Reverse B, and the two sides swap.</p>
+          </div>
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.62" data-end="0.88">
+            <p class="beat__eyebrow">Reflection</p>
+            <h3 class="beat__title">A mirror flips the hand.</h3>
+            <p class="beat__text">An etched pit reflects the wave back at the same wavelength, and the two interfere. Reversing direction reverses handedness: on the <span class="sigma-plus">σ+</span> line the NV reads the incident wave; re-tuned to the <span class="sigma-minus">σ−</span> line, it reads the reflected one.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.91" data-end="1.00">
+            <p class="beat__eyebrow">Two images</p>
+            <h3 class="beat__title">Two waves, one point, two colours.</h3>
+            <p class="beat__text">Tune the microwave to one line or the other, and image each wave on its own.</p>
+          </div>
+        </div>
+        <div class="scene__controls" data-show-from="0.88">
+          <div class="segmented" role="radiogroup" aria-label="Imaging channel" data-param="channel" data-target="#scene-detect" data-seed="false" data-reset="auto" data-caption="#channel-caption">
+            <span class="segmented__thumb" aria-hidden="true"></span>
+            <button type="button" role="radio" aria-checked="false" data-value="plus" data-caption-text="Incident wave only.">σ+</button>
+            <button type="button" role="radio" aria-checked="false" data-value="minus" data-caption-text="Reflected wave only.">σ−</button>
+            <button type="button" role="radio" aria-checked="true" data-value="both" data-caption-text="Both waves, two colours.">Both</button>
+          </div>
+          <p class="scene__controls-caption" id="channel-caption" aria-live="polite">Both waves, two colours.</p>
+        </div>
+        <div class="scene__fallback">
+          <p>The interactive 3D view isn't available in this browser, so here is the story in words.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Playground -->
+    <section id="playground" class="section playground" aria-labelledby="playground-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow">Try it</p>
+          <h2 class="headline" id="playground-title">Choose a hand.</h2>
+          <p class="subhead">Switch the field's handedness, tune the bias field and the microwave frequency, and watch the sensor and its spectrum respond. Flip B and watch the waves swap.</p>
+        </div>
+        <div class="tiles tiles--stack-md" data-reveal-group>
+          <div class="tile tile--6 playground__tile playground__tile--split playground__nv">
+            <div class="playground__stage" id="pg-nv" data-scene-fixed="nv-diamond" data-progress="0.6" data-init-drive="plus" data-init-bias="10">
+              <canvas aria-hidden="true"></canvas>
+              <p class="playground__fallback">The 3D view isn't available in this browser.</p>
+            </div>
+            <div class="playground__controls">
+              <div class="segmented" id="pg-nv-drive" role="radiogroup" aria-label="Microwave handedness" data-param="drive" data-target="#pg-nv" data-caption="#pg-nv-caption">
+                <span class="segmented__thumb" aria-hidden="true"></span>
+                <button type="button" role="radio" aria-checked="true" data-value="plus" data-caption-text="σ+ matches the |0⟩ → |+1⟩ line. The NV dims.">σ+</button>
+                <button type="button" role="radio" aria-checked="false" data-value="minus" data-caption-text="σ− can't drive the |0⟩ → |+1⟩ line. The NV stays bright.">σ−</button>
+                <button type="button" role="radio" aria-checked="false" data-value="off" data-caption-text="No drive. The NV glows at full brightness.">Off</button>
+              </div>
+              <p class="playground__caption" id="pg-nv-caption" aria-live="polite">σ+ matches the |0⟩ → |+1⟩ line. The NV dims.</p>
+              <div class="range-row">
+                <label for="bias-b">Bias field B</label>
+                <input type="range" id="bias-b" min="0" max="30" step="0.5" value="10" data-param="bias" data-target="#pg-nv" data-unit="mT" data-digits="1" aria-describedby="bias-b-out">
+                <output id="bias-b-out" for="bias-b">10.0 mT</output>
+              </div>
+              <div class="range-row">
+                <label for="mw-f">MW frequency</label>
+                <div class="range-track" id="mw-track">
+                  <input type="range" id="mw-f" min="2" max="3.75" step="0.005" value="3.15" data-param="mw" data-target="#pg-nv" data-unit="GHz" data-digits="3" aria-describedby="mw-f-out">
+                  <button type="button" class="mw-node mw-node--plus" data-line="plus" aria-label="Tune the microwave to the |0⟩ → |+1⟩ line"><span class="mw-node__label">|0⟩→|+1⟩</span><span class="mw-node__dot" aria-hidden="true"></span></button>
+                  <button type="button" class="mw-node mw-node--minus" data-line="minus" aria-label="Tune the microwave to the |0⟩ → |−1⟩ line"><span class="mw-node__dot" aria-hidden="true"></span><span class="mw-node__label">|0⟩→|−1⟩</span></button>
+                </div>
+                <output id="mw-f-out" for="mw-f">3.150 GHz</output>
+              </div>
+              <figure class="odmr" id="pg-odmr" data-drive-group="#pg-nv-drive" data-bias-input="#bias-b" data-mw-input="#mw-f" data-stage-caption="#pg-nv-caption">
+                <canvas class="odmr__plot" role="img" aria-label="ODMR spectrum: red-glow brightness against microwave frequency."></canvas>
+                <figcaption class="odmr__caption" aria-live="polite">ODMR: one dip at 3.15 GHz (|0⟩ → |+1⟩).</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="tile tile--6 playground__tile playground__waves">
+            <div class="playground__stage" id="pg-waves" data-scene-fixed="spinwave-yig" data-progress="0.75" data-init-flipb="false">
+              <canvas aria-hidden="true"></canvas>
+              <p class="playground__fallback">The 3D view isn't available in this browser.</p>
+            </div>
+            <div class="playground__controls">
+              <div class="switch-row">
+                <label for="flip-b">Flip B</label>
+                <button type="button" class="switch" id="flip-b" role="switch" aria-checked="false" data-param="flipB" data-target="#pg-waves" data-caption="#pg-waves-caption" data-caption-on="B reversed: the sides swap." data-caption-off="Left side turns σ+, right side turns σ−."></button>
+              </div>
+              <p class="playground__caption" id="pg-waves-caption" aria-live="polite">Left side turns σ+, right side turns σ−.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The microscope (before the paper) -->
+    <section id="microscope" class="section microscope" aria-labelledby="microscope-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow c-nv">The instrument</p>
+          <h2 class="headline" id="microscope-title">I built the microscope.</h2>
+          <p class="subhead">A scanning NV-centre microscope, assembled from components and tuned by hand — the tool behind the data that follows.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-setup" class="scene" data-scene="lab-setup" aria-labelledby="scene-setup-title">
+      <h2 class="visually-hidden" id="scene-setup-title">A 3D model of the instrument, from the laser to the probe tip</h2>
+      <div class="scene__sticky">
+        <canvas class="scene__canvas setup__canvas" aria-hidden="true"></canvas>
+        <div class="scene__fade scene__fade--top"></div>
+        <div class="scene__fade scene__fade--bottom"></div>
+        <div class="scene__beats">
+          <div class="beat beat--bottom beat--compact" data-start="0.02" data-end="0.22">
+            <p class="beat__eyebrow">The optics</p>
+            <h3 class="beat__title">Green light, built from parts.</h3>
+            <p class="beat__text">A 532 nm laser, pulsed by an acousto-optic modulator and carried by fibre to the microscope table. A dichroic, a galvo scanner and relay lenses steer it; the red glow comes back the same way to a single-photon counter.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.27" data-end="0.47">
+            <p class="beat__eyebrow">Down to the sample</p>
+            <h3 class="beat__title">Follow the beam.</h3>
+            <p class="beat__text">A periscope drops the beam into the objective of the AFM. Underneath, a stick-slip coarse stage and a closed-loop piezo scanner raster the sample, nanometre by nanometre.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.52" data-end="0.70">
+            <p class="beat__eyebrow">The probe</p>
+            <h3 class="beat__title">A diamond on a tuning fork.</h3>
+            <p class="beat__text">The NV probe hangs from the top on a quartz tuning fork, which holds the diamond tip nanometres above the film. A waveguide probe lands on the stripline to launch the spin waves.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.84" data-end="1.00">
+            <p class="beat__eyebrow">At the tip</p>
+            <h3 class="beat__title">One spin, reading the waves.</h3>
+            <p class="beat__text">A single NV centre at the apex, above the YIG film. With the microwave on the <span class="sigma-plus">σ+</span> line it dims over the left-going wave and stays bright over the <span class="sigma-minus">σ−</span> one.</p>
+          </div>
+        </div>
+        <div class="scene__fallback">
+          <p>The interactive 3D view isn't available in this browser. The instrument: a 532 nm laser, half-wave plate, beam splitter and acousto-optic modulator, coupled by fibre to a dichroic mirror, galvo scanner and 4f relay, then a periscope down into a 50x objective. Under the objective, the AFM: the NV probe on a tuning fork above the sample, which sits on stick-slip coarse stages and a piezo XYZ scanner, with a waveguide probe on the stripline. Red light returns through the dichroic to a single-photon counter.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section microscope microscope--after" aria-label="About the instrument">
+      <div class="container--wide">
+        <div class="tiles" data-reveal-group>
+          <div class="tile tile--2 stat">
+            <p class="stat__label">Sensor</p>
+            <p class="stat__value c-nv-red">One spin</p>
+            <p class="stat__note">A single nitrogen-vacancy centre at the tip of a diamond probe.</p>
+          </div>
+          <div class="tile tile--2 stat">
+            <p class="stat__label">Resolution</p>
+            <p class="stat__value">Nanoscale</p>
+            <p class="stat__note">The sensor rides nanometres above the sample on an atomic-force probe.</p>
+          </div>
+          <div class="tile tile--2 stat">
+            <p class="stat__label">Conditions</p>
+            <p class="stat__value">Room temperature</p>
+            <p class="stat__note">No cryostat. A green laser in, red light out.</p>
+          </div>
+          <div class="tile tile--3 stat">
+            <p class="stat__label">Built from</p>
+            <p class="stat__value">Components</p>
+            <p class="stat__note">Tuning-fork force sensing, confocal optics, single-photon counting and a microwave chain, integrated into one scanning system.</p>
+          </div>
+          <div class="tile tile--3 stat tile--wide-md">
+            <p class="stat__label">Readout</p>
+            <p class="stat__value">Light</p>
+            <p class="stat__note">The sensor dims when it feels the right microwave field. Brightness is the signal.</p>
+          </div>
+        </div>
+        <p class="section__caption" data-reveal>Instrument design, construction, experiments, nanofabrication, analysis and writing: Enbo Zhang.</p>
+      </div>
+    </section>
+
+    <!-- 13. My role -->
+    <section id="role" class="section role" aria-labelledby="role-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow">My role</p>
+          <h2 class="headline" id="role-title">From bare components to a finished result.</h2>
+          <p class="subhead">I co-conceived the project and carried it end to end.</p>
+        </div>
+        <div class="tiles" data-reveal-group>
+          <div class="tile tile--6 role-block">
+            <ul class="role-list">
+              <li><span class="role-list__tag c-nv">Instrumentation</span><span class="role-list__item">Built the scanning NV microscope.</span></li>
+              <li><span class="role-list__tag">Quantum sensing</span><span class="role-list__item">Turned a spin into a chirality detector.</span></li>
+              <li><span class="role-list__tag c-yig">Magnetism</span><span class="role-list__item">Spin-wave physics and modelling.</span></li>
+              <li><span class="role-list__tag c-gold">Nanofabrication</span><span class="role-list__item">Carved reflectors with a focused ion beam.</span></li>
+              <li><span class="role-list__tag sigma-plus">Analysis</span><span class="role-list__item">From photon counts to images.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. Next -->
+    <section id="next" class="section next" aria-labelledby="next-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <h2 class="headline" id="next-title">Want the details?</h2>
+          <p class="subhead">I'm happy to walk through the instrument, the physics or the data.</p>
+          <div class="cta-row">
+            <a class="btn btn--primary" href="../../index.html#contact">Get in touch</a>
+            <a class="btn btn--secondary" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=Yu6iXkMAAAAJ&amp;citation_for_view=Yu6iXkMAAAAJ:zYLM7Y9cAGgC" rel="noopener noreferrer" target="_blank">Read the PhD thesis</a>
+            <a class="btn btn--secondary" href="../../index.html#work">Back to all work</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="gfoot">
+    <div class="container">
+      <ul class="gfoot__links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="mailto:zebmail1@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/enbo-zhang-559964148/" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+      </ul>
+      <div class="gfoot__row">
+        <p>© 2026 Enbo Zhang.</p>
+        <p>Built by hand with HTML, CSS and Three.js.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
