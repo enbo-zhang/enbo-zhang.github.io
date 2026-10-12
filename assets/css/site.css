@@ -1963,3 +1963,47 @@ html:has(.page-project .gnav__rail) { scroll-padding-top: var(--nav-h); }
   .page-project .hero,
   .page-project main > .section { --gutter: 184px; }
 }
+
+/* --------------------------------------------------------------------------
+   Skills (home) — ruled spec sheet: index + title on the left, evidence and techniques on the right.
+   -------------------------------------------------------------------------- */
+.page-home .skillset { text-align: left; }
+.page-home .skillset .lockup { align-items: flex-start; text-align: left; }
+.page-home .skillset .lockup .eyebrow {
+  align-self: stretch;
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--c-border);
+}
+.page-home .skillset .lockup .subhead { max-width: 52ch; }
+.skills { list-style: none; margin: var(--sp-8) 0 0; padding: 0; }
+.skill {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: clamp(1.5rem, 5vw, 5rem);
+  padding: var(--sp-6) 0;
+  border-top: 1px solid var(--c-border);
+}
+.skill:last-child { border-bottom: 1px solid var(--c-border); }
+.skill__head { display: flex; align-items: baseline; gap: var(--sp-4); min-width: 0; }
+.skill__idx {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--c-text-3);
+}
+.skill__title {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+  font-weight: var(--fw-semibold);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--c-text-1);
+}
+.skill__body { min-width: 0; padding-top: 3px; }        /* chips sit on the title's first line */
+.skill .chips { margin-top: 0; }
+.skill__link { margin-top: var(--sp-3); }
+@media (max-width: 734px) {
+  .skills { margin-top: var(--sp-7); }
+  .skill { grid-template-columns: minmax(0, 1fr); row-gap: var(--sp-3); padding: var(--sp-5) 0; }
+  .skill__body { padding-top: 0; }
+}
