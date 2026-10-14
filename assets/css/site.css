@@ -704,21 +704,6 @@ a.project-card:focus-visible { border-radius: var(--r-tile); }
   .ring--minus { animation: spin-ccw 30s linear infinite; }
 }
 
-.project-card--soon {
-  background: var(--c-surface-1);
-  border: 1px dashed var(--c-border);
-  color: var(--c-text-3);
-  min-height: 260px;
-  justify-content: flex-end;
-  gap: var(--sp-2);
-}
-.project-card--soon .project-card__eyebrow { font-size: var(--fs-caption); color: var(--c-text-3); }
-.project-card--soon .project-card__title { font-size: var(--fs-title); line-height: var(--lh-title); color: var(--c-text-2); }
-.project-card--soon .project-card__text { font-size: var(--fs-body); color: var(--c-text-3); }
-@media (hover: hover) and (pointer: fine) {
-  .project-card--soon:hover { background-color: var(--c-surface-1); }
-}
-
 @media (max-width: 1068px) {
   .project-card--featured { grid-template-columns: minmax(0, 1fr); min-height: 0; }
   .project-card__visual { order: -1; min-height: 300px; aspect-ratio: 16 / 10; }
@@ -937,7 +922,11 @@ a.project-card:focus-visible { border-radius: var(--r-tile); }
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
 }
-@media (max-height: 760px) and (min-width: 735px) { .beat--compact .beat__text { display: none; } }
+/* Short screens: live overlays drop the body text to keep the scene in view. Never in the
+   stacked fallback, and not where the text is the story (.scene--keep-text, the P-03 lab walk). */
+@media (max-height: 760px) and (min-width: 735px) {
+  .js .scene:not(.scene--static):not(.scene--keep-text) .beat--compact .beat__text { display: none; }
+}
 .beat--compact .beat__eyebrow { margin-bottom: var(--sp-1); }
 .beat--compact .beat__title { font-size: var(--fs-title); line-height: var(--lh-title); }
 .beat--compact .beat__text { margin-top: var(--sp-2); max-width: 44em; }
@@ -1706,7 +1695,7 @@ dialog.lightbox[open]::backdrop { animation: fade-in var(--dur-base) var(--ease-
 }
 
 /* instrument scroll scene */
-#scene-setup { --scene-h: 520vh; }
+#scene-setup { --scene-h: 900vh; }
 .setup__canvas { cursor: grab; touch-action: pan-y; }
 .setup__canvas.is-grabbing { cursor: grabbing; }
 .setup__veil {
@@ -1730,7 +1719,6 @@ dialog.lightbox[open]::backdrop { animation: fade-in var(--dur-base) var(--ease-
 
   /* home: project visual keeps its own width (aspect-ratio + min-height was forcing it wider than the card) */
   .project-card__visual { min-height: 0; aspect-ratio: 4 / 3; }
-  .project-card--soon { min-height: 150px; }
 
   /* about: long paragraphs read better ranged left, like the rest of the lab style */
   .about__body, .about__body .lockup { text-align: left; align-items: flex-start; }

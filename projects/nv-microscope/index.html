@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://gc.zgo.at 'sha256-5r0ceAi77ofyhKluuUBJUzdOIMc4aEZR9Xlgif5W6zg=' 'sha256-qPX4BtIQ1eOif35UrDZ7IRTYyquZhpJFLSPXLKWkf84='; style-src 'self'; img-src 'self' data: https://enbo-zhang.goatcounter.com; font-src 'self'; connect-src 'self' https://enbo-zhang.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Building a quantum microscope — Enbo Zhang</title>
+  <meta name="description" content="A scanning NV-centre microscope, built from components and run by its own control software: a 3D walk through the lab, from the shielded room down to the probe tip. A project by Enbo Zhang.">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Building a quantum microscope — Enbo Zhang">
+  <meta property="og:description" content="A scanning NV-centre microscope, built from components and run by its own control software: a 3D walk through the lab, from the shielded room down to the probe tip. A project by Enbo Zhang.">
+  <meta property="og:image" content="https://enbo-zhang.github.io/assets/img/portrait.jpg">
+  <meta property="og:url" content="https://enbo-zhang.github.io/projects/nv-microscope/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%2364d2ff' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='12' fill='none' stroke='%23ff375f' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff3b30'/%3E%3C/svg%3E">
+  <script>document.documentElement.className='js';</script>
+  <script type="importmap">{"imports":{"three":"../../assets/vendor/three/build/three.module.js","three/addons/":"../../assets/vendor/three/examples/jsm/"}}</script>
+  <link rel="modulepreload" href="../../assets/vendor/three/build/three.module.js">
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/site.css">
+  <script type="module" src="../../assets/js/site.js"></script>
+  <script data-goatcounter="https://enbo-zhang.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body class="page-project">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="gnav">
+    <nav class="gnav__inner" aria-label="Main">
+      <a class="gnav__name" href="../../index.html">Enbo Zhang</a>
+      <a class="gnav__home" href="../../index.html">Home</a>
+    </nav>
+    <nav class="gnav__rail" aria-label="Sections">
+      <a class="rail__seg" href="#overview"><span class="rail__label"><span class="rail__num">00</span> Intro</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#microscope"><span class="rail__label"><span class="rail__num">01</span> Instrument</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#role"><span class="rail__label"><span class="rail__num">02</span> My role</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section id="overview" class="hero hero--project" aria-labelledby="hero-title">
+      <p class="eyebrow lab-label"><span class="lab-index">[P-03]</span> Instrumentation · Automation</p>
+      <h1 class="hero__title" id="hero-title">Building a quantum microscope.</h1>
+      <p class="hero__sub">A scanning NV-centre microscope, built from components and run by software I wrote — from the shielded room it lives in down to a single spin at the tip of a diamond probe.</p>
+      <div class="cta-row">
+        <a class="btn btn--primary" href="#microscope">Walk through the lab</a>
+        <a class="btn btn--secondary" href="../nv-chirality/index.html">See what it measured</a>
+      </div>
+      <dl class="hero__spec">
+        <div><dt>Affiliation</dt><dd>Carnegie Mellon University</dd></div>
+        <div><dt>Software</dt><dd>Python · LabVIEW · MATLAB</dd></div>
+        <div><dt>Resource</dt><dd><a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=Yu6iXkMAAAAJ&amp;citation_for_view=Yu6iXkMAAAAJ:zYLM7Y9cAGgC" rel="noopener noreferrer" target="_blank">PhD thesis <span aria-hidden="true">↗</span></a></dd></div>
+      </dl>
+      <div class="hero__cue" aria-hidden="true">Scroll</div>
+    </section>
+
+    <!-- The instrument -->
+    <section id="microscope" class="section microscope" aria-labelledby="microscope-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow c-nv">The instrument</p>
+          <h2 class="headline" id="microscope-title">I built the microscope.</h2>
+          <p class="subhead">Assembled from components and tuned by hand. Scroll through the lab, from the room down to the probe tip; drag the model to look around.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-setup" class="scene scene--keep-text" data-scene="lab-setup" aria-labelledby="scene-setup-title">
+      <h2 class="visually-hidden" id="scene-setup-title">A 3D model of the lab and the instrument, from the shielded room to the probe tip</h2>
+      <div class="scene__sticky">
+        <canvas class="scene__canvas setup__canvas" aria-hidden="true"></canvas>
+        <div class="scene__fade scene__fade--top"></div>
+        <div class="scene__fade scene__fade--bottom"></div>
+        <div class="scene__beats">
+          <div class="beat beat--bottom beat--compact" data-start="0.02" data-end="0.10">
+            <p class="beat__eyebrow">The room</p>
+            <h3 class="beat__title">A quiet box for one spin.</h3>
+            <p class="beat__text">The whole setup lives inside one room-sized Faraday cage. Electronic noise from outside stops at the walls, and the temperature holds within ±1 °C.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.12" data-end="0.20">
+            <p class="beat__eyebrow">Against vibration</p>
+            <h3 class="beat__title">The instruments hang.</h3>
+            <p class="beat__text">The computer, the microwave generator and the amplifier are all suspended from the ceiling, right above the optics, to avoid vibration.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.22" data-end="0.30">
+            <p class="beat__eyebrow">Still air</p>
+            <h3 class="beat__title">Curtain, then cage.</h3>
+            <p class="beat__text">The two optical tables sit behind a black curtain inside a second cage, to avoid airflow around the beam.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.32" data-end="0.40">
+            <p class="beat__eyebrow">Automation</p>
+            <h3 class="beat__title">Load the sample. Walk away.</h3>
+            <p class="beat__text">Control software I wrote in Python, LabVIEW and MATLAB runs the laser pulses, the microwave chain, the optical scan and the nano-positioning. Once the sample is loaded, a measurement runs start to finish on its own.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.42" data-end="0.49">
+            <p class="beat__eyebrow">Table one</p>
+            <h3 class="beat__title">Light, in pulses.</h3>
+            <p class="beat__text">A green laser passes through an acousto-optic modulator, which switches it on and off in short pulses. A single optical fibre carries the light to the second table.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.50" data-end="0.56">
+            <p class="beat__eyebrow">Table two</p>
+            <h3 class="beat__title">A confocal microscope, and the AFM.</h3>
+            <p class="beat__text">A galvo mirror scans the focus across the sample. Green light makes the NV centre in the probe glow red; that glow comes back to a single-photon detector, which fires a pulse for every photon it catches. Counting the pulses gives the brightness. The AFM and its nano-positioning stage share this table.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.575" data-end="0.682">
+            <p class="beat__eyebrow">Down to the sample</p>
+            <h3 class="beat__title">Follow the beam.</h3>
+            <p class="beat__text">At the far end of the same table, a periscope drops the beam into the objective of the AFM. Underneath, a stick-slip stage brings the sample into place and a closed-loop piezo scanner rasters it, nanometre by nanometre.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.712" data-end="0.82">
+            <p class="beat__eyebrow">The probe</p>
+            <h3 class="beat__title">A diamond on a tuning fork.</h3>
+            <p class="beat__text">The NV probe hangs from the top on a quartz tuning fork, which holds the diamond tip nanometres above the sample: a thin magnetic film of YIG under a gold stripline. A waveguide probe lands on the stripline, and its microwaves launch spin waves through the film.</p>
+          </div>
+          <div class="beat beat--bottom beat--compact" data-start="0.904" data-end="1.00">
+            <p class="beat__eyebrow">At the tip</p>
+            <h3 class="beat__title">One spin, reading the waves.</h3>
+            <p class="beat__text">A single NV centre at the apex, above the YIG film. Each spin wave's field rotates, and the hand depends on its direction: <span class="sigma-plus">σ+</span> heading left, <span class="sigma-minus">σ−</span> heading right. With the microwave on the <span class="sigma-plus">σ+</span> line, the NV dims over the left-going wave and stays bright over the right-going one.</p>
+          </div>
+        </div>
+        <div class="scene__fallback">
+          <p>The interactive 3D view isn't available in this browser. The lab: the setup sits in a room-sized Faraday cage held within ±1 °C; the computer, microwave generator and amplifier are suspended from the ceiling above the optics; the two optical tables are enclosed by a black curtain and a second cage against airflow; and control software (Python, LabVIEW, MATLAB) runs the whole measurement automatically once the sample is loaded. The instrument: a 532 nm laser, half-wave plate, beam splitter and acousto-optic modulator, coupled by fibre to the second table: a dichroic mirror, galvo scanner and 4f relay, then, on the same table, a periscope down into a 50x objective. Under the objective, the AFM: the NV probe on a tuning fork above the sample, which sits on stick-slip coarse stages and a piezo XYZ scanner, with a waveguide probe on the stripline. Red light returns through the dichroic to a single-photon counter.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section microscope microscope--after" aria-label="About the instrument">
+      <div class="container--wide">
+        <div class="tiles" data-reveal-group>
+          <div class="tile tile--2 stat">
+            <p class="stat__label">Sensor</p>
+            <p class="stat__value c-nv-red">One spin</p>
+            <p class="stat__note">A single nitrogen-vacancy centre at the tip of a diamond probe.</p>
+          </div>
+          <div class="tile tile--2 stat">
+            <p class="stat__label">Resolution</p>
+            <p class="stat__value">Nanoscale</p>
+            <p class="stat__note">The sensor rides nanometres above the sample on an atomic-force probe.</p>
+          </div>
+          <div class="tile tile--2 stat">
+            <p class="stat__label">Conditions</p>
+            <p class="stat__value">Room temperature</p>
+            <p class="stat__note">No cryostat. A green laser in, red light out.</p>
+          </div>
+          <div class="tile tile--3 stat">
+            <p class="stat__label">Built from</p>
+            <p class="stat__value">Components</p>
+            <p class="stat__note">Tuning-fork force sensing, confocal optics, single-photon counting and a microwave chain, integrated into one scanning system.</p>
+          </div>
+          <div class="tile tile--3 stat tile--wide-md">
+            <p class="stat__label">Readout</p>
+            <p class="stat__value">Light</p>
+            <p class="stat__note">The sensor dims when it feels the right microwave field. Brightness is the signal.</p>
+          </div>
+        </div>
+        <p class="section__caption" data-reveal>Instrument design, construction and control software: Enbo Zhang.</p>
+      </div>
+    </section>
+
+    <!-- My role -->
+    <section id="role" class="section role" aria-labelledby="role-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow">My role</p>
+          <h2 class="headline" id="role-title">Every part, by hand.</h2>
+          <p class="subhead">I designed and assembled the instrument, wrote the software that runs it, and used it for the measurements.</p>
+        </div>
+        <div class="tiles" data-reveal-group>
+          <div class="tile tile--6 role-block">
+            <ul class="role-list">
+              <li><span class="role-list__tag c-nv">Instrumentation</span><span class="role-list__item">Built the scanning NV microscope from components.</span></li>
+              <li><span class="role-list__tag">Optics</span><span class="role-list__item">Pulsed excitation, confocal scanning, single-photon counting.</span></li>
+              <li><span class="role-list__tag">Microwave</span><span class="role-list__item">The drive chain and the waveguide probe.</span></li>
+              <li><span class="role-list__tag">Nano-positioning</span><span class="role-list__item">Coarse stages, piezo scanner, tuning-fork AFM.</span></li>
+              <li><span class="role-list__tag">Automation</span><span class="role-list__item">Python, LabVIEW and MATLAB control: load the sample, and a measurement runs on its own.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next -->
+    <section id="next" class="section next" aria-labelledby="next-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <h2 class="headline" id="next-title">See what it measured.</h2>
+          <p class="subhead">The spin-wave project shows what this microscope can read: the handedness of a magnetic wave, at a single point.</p>
+          <div class="cta-row">
+            <a class="btn btn--primary" href="../nv-chirality/index.html">See the physics</a>
+            <a class="btn btn--secondary" href="../../index.html#contact">Get in touch</a>
+            <a class="btn btn--secondary" href="../../index.html#work">Back to all work</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="gfoot">
+    <div class="container">
+      <ul class="gfoot__links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="mailto:zebmail1@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/enbo-zhang-559964148/" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+      </ul>
+      <div class="gfoot__row">
+        <p>© 2026 Enbo Zhang.</p>
+        <p>Built by hand with HTML, CSS and Three.js.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

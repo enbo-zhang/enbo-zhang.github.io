@@ -1,15 +1,20 @@
-// lab-setup.js — the instrument, built from thesis Figs 2.2 and 2.6, told as a scroll story.
+// lab-setup.js — the lab and the instrument, told as a scroll story.
 // Optics (top): 532 nm laser, λ/2, beam splitter, AOM (pulses the beam), fibre to the microscope table:
 //   dichroic, galvo, 4f relay, periscope. Red fluorescence returns through the dichroic to the SPCM (+ CCD branch).
-// The periscope sends the beam over the table edge and down to the AFM module below it:
-//   50× objective on a gantry, NV probe on a tuning fork hanging from the top, sample on a compact
-//   nano-positioning stack (stick-slip coarse XYZ + piezo flexure scanner that rasters), waveguide probe.
-// Storyboard (progress p):
-//   0.00–0.22  overview of the optics
-//   0.22–0.50  the camera follows the beam down to the AFM module
-//   0.50–0.76  move in on the NV probe tip
-//   0.72–0.87  dive into the tip (fade through black)
-//   0.80–1.00  close-up: diamond tip with its NV over the YIG film, σ+ / σ− spin waves either side of the stripline
+// The AFM shares the microscope table: the periscope lifts the beam over to the far end of the table and
+//   drops it into a 50× objective on a gantry. NV probe on a tuning fork hanging from the gantry, sample on a
+//   compact nano-positioning stack (stick-slip coarse XYZ + piezo flexure scanner that rasters), waveguide probe.
+// Storyboard (progress p). The lab around the instrument comes first (lab-room.js):
+//   0.00–0.10  the Faraday-cage room: outside noise stops at the walls, ±1 °C
+//   0.10–0.20  instruments suspended from the ceiling, above the optical tables
+//   0.20–0.30  black curtain + second cage around the two optical tables (airflow stops there)
+//   0.30–0.40  the curtain lifts; control software drives every subsystem
+// then the instrument itself, in the last 60% (old storyboard o, mapped through O(o) = 0.4 + 0.6·o):
+//   table one (laser + AOM), table two (confocal: galvo, single-photon counter),
+//   o 0.22–0.50  the camera follows the beam along the table to the AFM module
+//   o 0.50–0.76  move in on the NV probe tip
+//   o 0.72–0.87  dive into the tip (fade through black)
+//   o 0.80–1.00  close-up: diamond tip with its NV over the YIG film, σ+ / σ− spin waves either side of the stripline
 // Drag to rotate (offsets the scripted view).
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
@@ -17,6 +22,7 @@ import {
   COLORS, clamp, damp, lerp, smoothstep, easeInOut, createRenderer, makeLabelSprite, makeGlowSprite, makeTube,
   observeResize, fitCameraToAspect, createLoop, disposeObject,
 } from './common.js';
+import { createLabRoom } from './lab-room.js';
 
 const H = 0.14;                     // beam height above the table
 const MONO = 'ui-monospace, "SF Mono", Menlo, Consolas, monospace';
@@ -25,6 +31,8 @@ const ZAX = new THREE.Vector3(0, 0, 1);
 const v = (x, y, z) => new THREE.Vector3(x, y, z);
 const SPEED = 0.9;                  // pulse speed, world units per second
 const GAP = 0.55;                   // spacing between pulses
+const P0 = 0.4;                     // where the instrument story starts (the lab room comes before it)
+const O = (o) => P0 + (1 - P0) * o; // old storyboard progress → scene progress
 
 /** Polyline with arc-length lookup. */
 function polyline(points) {
@@ -49,8 +57,8 @@ export function createScene(canvas, options = {}) {
   const renderer = createRenderer(canvas);
   renderer.toneMappingExposure = 1.05;
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x000000, 8, 14);
-  const camera = new THREE.PerspectiveCamera(30, 2, 0.02, 60);
+  scene.fog = new THREE.Fog(0x000000, 30, 45);   // pulled in to (8, 14) once the camera is inside the optics
+  const camera = new THREE.PerspectiveCamera(30, 2, 0.01, 60);
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   const envTex = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
@@ -80,7 +88,8 @@ export function createScene(canvas, options = {}) {
   };
 
   // ---------------------------------------------------------------- helpers
-  const add = (m, parent = root) => { parent.add(m); return m; };
+  let into = root;                                    // where new parts go (the AFM module builds into its own group)
+  const add = (m, parent = into) => { parent.add(m); return m; };
   function box(pos, size, mat) {
     const m = new THREE.Mesh(new THREE.BoxGeometry(size[0], size[1], size[2]), mat);
     m.position.copy(pos);
@@ -151,7 +160,7 @@ export function createScene(canvas, options = {}) {
     }
   }
   table(-2.046, -0.124, -0.527, 0.713, 0x2a2228);    // excitation table
-  table(0.124, 2.759, -0.744, 0.868, 0x1f262c);       // microscope + AFM table
+  table(0.124, 3.4, -0.744, 0.868, 0x1f262c);         // microscope + AFM table
 
   // ---------------------------------------------------------------- excitation table
   const px = v(1, 0, 0), nx = v(-1, 0, 0), pz = v(0, 0, 1), nz = v(0, 0, -1), py = v(0, 1, 0), ny = v(0, -1, 0);
@@ -200,19 +209,28 @@ export function createScene(canvas, options = {}) {
   fibreCoupler(v(1.24, H, -0.496), pz);
   box(v(1.798, 0.105, -0.527), [0.55, 0.19, 0.28], M.dark);        // SPCM
   box(v(1.798, 0.205, -0.527), [0.5, 0.012, 0.24], M.black);
-  // periscope: up, then out over the table edge and straight down to the AFM module
-  const DROP_X = 3.2, BZ = 0.403;
+  // periscope: up, along above the table, and straight down into the AFM objective at the table's far end
+  const BZ = 0.403;
+  const AFM_AT = v(2.8, 0.04, BZ), AFM_S = 0.5;      // the AFM module stands on this table, at half scale
+  const Y_TOP = 1.03;                                 // periscope height, above the AFM gantry
   mirror(v(1.953, H, BZ), px, py, false);
-  mirror(v(1.953, 0.95, BZ), py, px, false);
-  mirror(v(DROP_X, 0.95, BZ), px, ny, false);
-  rod(v(1.953, 0, 0.347), v(1.953, 1.02, 0.347), 0.012, M.post);
-  rod(v(1.953, 0, 0.459), v(1.953, 1.02, 0.459), 0.012, M.post);
-  rod(v(2.666, 0, BZ), v(2.666, 1.06, BZ), 0.02, M.post);
-  box(v(2.933, 1.03, BZ), [0.58, 0.035, 0.06], M.dark);
+  mirror(v(1.953, Y_TOP, BZ), py, px, false);
+  mirror(v(AFM_AT.x, Y_TOP, BZ), px, ny, false);
+  rod(v(1.953, 0, 0.347), v(1.953, Y_TOP + 0.06, 0.347), 0.012, M.post);
+  rod(v(1.953, 0, 0.459), v(1.953, Y_TOP + 0.06, 0.459), 0.012, M.post);
+  box(v((1.92 + AFM_AT.x + 0.06) / 2, Y_TOP + 0.075, BZ), [AFM_AT.x + 0.06 - 1.92, 0.03, 0.05], M.dark);   // top arm
+  rod(v(2.3, 0, BZ - 0.1), v(2.3, Y_TOP + 0.09, BZ - 0.1), 0.02, M.post);
+  box(v(2.3, Y_TOP + 0.075, BZ - 0.05), [0.05, 0.03, 0.12], M.dark);
 
-  // ---------------------------------------------------------------- AFM module (below the optics)
-  const A = v(DROP_X, -2.7, BZ);
+  // ---------------------------------------------------------------- AFM module (far end of the microscope table)
+  // built in its own frame (origin on the platform top, under the objective), then placed on the table at AFM_S
+  const afm = new THREE.Group();
+  afm.position.copy(AFM_AT); afm.scale.setScalar(AFM_S);
+  root.add(afm);
+  into = afm;
+  const A = v(0, 0, 0);
   const a = (x, y, z) => v(A.x + x, A.y + y, A.z + z);
+  const aw = (x, y, z) => v(AFM_AT.x + AFM_S * x, AFM_AT.y + AFM_S * y, AFM_AT.z + AFM_S * z);   // module → world
   const flexure = new THREE.MeshStandardMaterial({ color: 0x27324a, metalness: 0.5, roughness: 0.4 });
   const titan = new THREE.MeshStandardMaterial({ color: 0xa9adb3, metalness: 0.85, roughness: 0.32 });
   const glowLine = new THREE.MeshBasicMaterial({ color: 0x64d2ff, toneMapped: false, transparent: true, opacity: 0.55 });
@@ -248,8 +266,8 @@ export function createScene(canvas, options = {}) {
   // the scanning part: inner frame, puck and sample move together in a raster under the fixed tip
   const S_TOP = A.y + 0.66;
   const FOCUS = v(A.x, S_TOP + 0.012, A.z);              // NV at the probe apex
-  const scanner = new THREE.Group(); root.add(scanner);
-  const sc = (m) => { scanner.attach(m); return m; };
+  const scanner = new THREE.Group(); afm.add(scanner);
+  const sc = (m) => { scanner.add(m); return m; };
   sc(box(v(A.x, yc + 0.124, A.z), [0.36, 0.006, 0.36], M.frame));
   for (const [dx, dz] of [[-0.15, -0.15], [0.15, -0.15], [-0.15, 0.15], [0.15, 0.15]]) {
     const scr = sc(add(new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.008, 12), titan)));
@@ -335,6 +353,8 @@ export function createScene(canvas, options = {}) {
     wgRod.quaternion.setFromUnitVectors(UP, wgD.normalize());
   }
   aimWaveguide();
+  into = root;
+  const FOCUS_W = aw(FOCUS.x, FOCUS.y, FOCUS.z);
 
   // ---------------------------------------------------------------- beams
   const cwPts = [v(-1.5, H, 0.186), v(-1.364, H, 0.186), v(-1.364, H, -0.341), v(-0.992, H, -0.341), v(-0.992, H, 0)];
@@ -342,7 +362,7 @@ export function createScene(canvas, options = {}) {
   const g2Pts = [v(-0.992, H, 0), v(-0.992, H, 0.527), v(-0.434, H, 0.527), v(-0.434, H, 0.167)];
   const fibre1 = new THREE.CatmullRomCurve3([v(-0.434, H, 0.081), v(-0.434, 0.22, -0.074), v(-0.248, 0.44, -0.31), v(0.062, 0.46, -0.484), v(0.26, H + 0.05, -0.397), v(0.341, H, -0.372)]);
   const g3Pts = [v(0.428, H, -0.372), v(0.806, H, -0.372), v(0.806, H, -0.124), v(1.24, H, -0.124), v(1.24, H, 0.155), v(0.558, H, 0.155),
-    v(0.558, H, BZ), v(1.953, H, BZ), v(1.953, 0.95, BZ), v(DROP_X, 0.95, BZ), a(0, 1.68, 0), FOCUS.clone()];
+    v(0.558, H, BZ), v(1.953, H, BZ), v(1.953, Y_TOP, BZ), v(AFM_AT.x, Y_TOP, BZ), aw(0, 1.68, 0), FOCUS_W.clone()];
   const redTail = [v(1.24, H, -0.124), v(1.24, H, -0.453)];
   const fibre2 = new THREE.CatmullRomCurve3([v(1.24, H, -0.539), v(1.265, 0.26, -0.645), v(1.488, 0.3, -0.682), v(1.593, H + 0.03, -0.546), v(1.627, H, -0.527)]);
   const ccdPts = [v(1.705, H, 0.403), v(1.705, H, 0.198)];
@@ -352,7 +372,7 @@ export function createScene(canvas, options = {}) {
   tubes(dumpPts, COLORS.laser, { radius: 0.006, opacity: 0.35, additive: true });
   tubes(g2Pts, COLORS.laser, { radius: 0.006, opacity: 0.22, additive: true });
   tubes(g3Pts, COLORS.laser, { radius: 0.006, opacity: 0.22, additive: true });
-  tubes([v(DROP_X, 0.95, BZ), a(0, 1.68, 0)], COLORS.laser, { radius: 0.014, opacity: 0.35, additive: true });   // the drop to the AFM
+  tubes([v(AFM_AT.x, Y_TOP, BZ), aw(0, 1.68, 0)], COLORS.laser, { radius: 0.01, opacity: 0.35, additive: true });   // the drop to the AFM
   tubes(redTail, COLORS.nvRed, { radius: 0.006, opacity: 0.25, additive: true });
   tubes(ccdPts, COLORS.nvRed, { radius: 0.005, opacity: 0.2, additive: true });
   const fibreMat = new THREE.MeshStandardMaterial({ color: 0x2f6fd6, emissive: 0x16408a, emissiveIntensity: 0.6, roughness: 0.4 });
@@ -363,42 +383,45 @@ export function createScene(canvas, options = {}) {
   const greenPath = polyline([...g2Pts, ...fibre1.getPoints(60), ...g3Pts]);
   const g3Rev = g3Pts.slice(3).reverse();                        // focus … dichroic
   const redPath = polyline([...g3Rev, ...redTail.slice(1), ...fibre2.getPoints(30)]);
-  function makePulses(path, color, size) {
+  function makePulses(path, color, size, outbound) {
     const n = Math.ceil(path.total / GAP);
     const list = [];
     for (let i = 0; i < n; i++) list.push(add(makeGlowSprite(color, { size, opacity: 0.95 })));
-    return { path, list, size };
+    return { path, list, size, outbound };
   }
-  const greenPulses = makePulses(greenPath, COLORS.laser, 0.11);
-  const redPulses = makePulses(redPath, COLORS.nvRed, 0.1);
-  const nvGlow = add(makeGlowSprite(COLORS.nvRed, { size: 0.05 }));
+  const greenPulses = makePulses(greenPath, COLORS.laser, 0.11, true);    // ends at the NV
+  const redPulses = makePulses(redPath, COLORS.nvRed, 0.1, false);        // starts at the NV
+  const nvGlow = add(makeGlowSprite(COLORS.nvRed, { size: 0.05 }), afm);
   nvGlow.position.copy(FOCUS);
-  const nvBloom = add(makeGlowSprite(COLORS.nvRedSoft, { size: 0.16, opacity: 0.4 }));
+  const nvBloom = add(makeGlowSprite(COLORS.nvRedSoft, { size: 0.16, opacity: 0.4 }), afm);
   nvBloom.position.copy(FOCUS);
 
   function placePulses(group, time, shrink) {
-    const { path, list, size } = group;
+    const { path, list, size, outbound } = group;
     const off = (time * SPEED) % GAP;
     list.forEach((s, i) => {
       const d = off + i * GAP;
       s.visible = d <= path.total;
       if (!s.visible) return;
       path.at(d, s.position);
-      // smaller near the AFM so the pulses read at close range
-      s.scale.setScalar(size * (s.position.y < 0 ? lerp(1, 1 - shrink, clamp(-s.position.y / 1.5)) : 1));
+      // smaller on the drop into the (half-scale) AFM, so the pulses keep their size against it at close range;
+      // measured along the beam, so the size only changes one way
+      const toFocus = outbound ? path.total - d : d;
+      s.scale.setScalar(size * lerp(1 - shrink, 1, smoothstep(0.15, 0.7, toFocus)));
       s.material.opacity = 0.95 * clamp(d / 0.15) * clamp((path.total - d) / 0.15);
     });
   }
 
   // ---------------------------------------------------------------- labels
   const labels = [];
-  function label(text, pos, { minor = false, color = '#c7c7cc', group = 'optics', scale = 0.12, parent = root } = {}) {
+  // phoneAnchor: horizontal anchor on small screens (0 = label grows right of its point, 1 = left), for labels near a portrait frame's edge
+  function label(text, pos, { minor = false, color = '#c7c7cc', group = 'optics', scale = 0.12, parent = root, phoneAnchor = 0.5 } = {}) {
     const s = makeLabelSprite(text, {
       color, fontSize: 42, fontFamily: MONO, fontWeight: 500, scale, glow: false,
       background: 'rgba(0,0,0,0.6)', padding: 12,
     });
     s.position.copy(pos);
-    Object.assign(s.userData, { base: s.scale.clone(), minor, group });
+    Object.assign(s.userData, { base: s.scale.clone(), minor, group, phoneAnchor });
     labels.push(s);
     return add(s, parent);
   }
@@ -411,17 +434,18 @@ export function createScene(canvas, options = {}) {
   label('Galvo', v(0.515, 0.36, 0.446));
   label('4f relay', v(1.147, 0.3, 0.403), { minor: true });
   label('CCD', v(1.705, 0.33, 0.105), { minor: true });
-  label('SPCM', v(1.798, 0.38, -0.527));
-  label('Periscope → AFM', v(2.6, 1.18, BZ));
+  label('Photon counter', v(1.798, 0.38, -0.527));
+  label('Periscope', v(2.12, 0.85, BZ), { group: 'peri' });
+  label('AFM', v(AFM_AT.x + 0.45, 0.62, BZ), { minor: true });   // off the right edge in portrait; the table sign names it there
   label('EXCITATION', v(-1.085, 0.06, 0.775), { color: '#8e8e93' });
-  label('MICROSCOPE TABLE', v(1.426, 0.06, 0.93), { color: '#8e8e93' });
-  const al = { group: 'afm', scale: 0.07 };
+  label('CONFOCAL + AFM TABLE', v(1.762, 0.06, 0.93), { color: '#8e8e93' });
+  const al = { group: 'afm', scale: 0.07, parent: afm };          // in the module's frame, so they scale with it
   label('50× objective', a(0.36, 1.53, 0), al);
   label('NV probe · tuning fork', a(-0.42, 0.8, 0), al);
   label('Piezo XYZ scanner', a(0.5, 0.48, 0.32), al);
-  label('Coarse XYZ · stick-slip', a(0.52, 0.2, 0.32), { ...al, minor: true });
-  label('Waveguide', a(-0.2, 0.5, 0.62), { ...al, minor: true });
-  label('AFM + NANO-POSITIONING', a(0, 0.02, 0.92), { ...al, color: '#8e8e93' });
+  label('Coarse XYZ · stick-slip', a(0.66, 0.34, 0.2), { ...al, phoneAnchor: 0.85 });
+  label('Waveguide', a(-0.2, 0.5, 0.62), { ...al, phoneAnchor: 0.3 });
+  label('AFM + NANO-POSITIONING', a(0, 1.84, -0.3), { ...al, color: '#8e8e93' });   // a sign on the gantry's top beam
 
   // ---------------------------------------------------------------- close-up: the tip above the YIG film
   const micro = new THREE.Scene();
@@ -506,9 +530,10 @@ export function createScene(canvas, options = {}) {
   mCore.position.y = 0.09; mProbe.add(mCore);
   const mNv = makeGlowSprite(COLORS.nvRed, { size: 0.75 }); mNv.position.y = 0.09; mProbe.add(mNv);
   const mNvBloom = makeGlowSprite(COLORS.nvRedSoft, { size: 2.4, opacity: 0.45 }); mNvBloom.position.y = 0.09; mProbe.add(mNvBloom);
+  const mLabels = [];
   const mLabel = (text, pos, color = '#c7c7cc', parent = micro) => {
     const s = makeLabelSprite(text, { color, fontSize: 42, fontFamily: MONO, fontWeight: 500, scale: 0.3, glow: false, background: 'rgba(0,0,0,0.6)', padding: 12 });
-    s.position.copy(pos); parent.add(s); return s;
+    s.position.copy(pos); parent.add(s); mLabels.push(s); return s;
   };
   mLabel('NV centre', v(0.95, 0.3, 0), '#ff8a80', mProbe);
   mLabel('Diamond tip', v(-1.05, 0.8, 0), '#c7c7cc', mProbe);
@@ -518,15 +543,35 @@ export function createScene(canvas, options = {}) {
   mLabel('Stripline', v(0, 0.35, 2.2));
   mLabel('YIG film', v(4.2, 0.3, -2.2), '#8e8e93');
 
+  // ---------------------------------------------------------------- the lab around it (opening act)
+  const room = createLabRoom({ parent: root, textures });
+
   // ---------------------------------------------------------------- storyboard camera
+  const roomView = { t: v(0.6, 1.15, -0.2), r: 18, yaw: 0.62, pitch: 0.36 };
+  const rackView = { t: v(0.55, 1.95, 0.05), r: 8.6, yaw: 0.14, pitch: 0.16 };
+  const encView = { t: v(0.65, 0.5, 0.05), r: 10, yaw: -0.42, pitch: 0.3 };
+  const ctrlView = { t: v(0.6, 0.75, 0.05), r: 11, yaw: 0.2, pitch: 0.32 };
+  const table1 = { t: v(-1.05, 0.06, 0.05), r: 3.7, yaw: 0.18, pitch: 0.62 };
+  const table2 = { t: v(1.76, -0.05, 0.06), r: 4.6, yaw: -0.2, pitch: 0.62 };
   const KEYS = [
-    { p: 0.00, t: v(0.45, -0.45, 0.2), r: 6, yaw: -0.1, pitch: 0.62 },
-    { p: 0.18, t: v(0.6, -0.42, 0.2), r: 5.7, yaw: 0.05, pitch: 0.58 },
-    { p: 0.34, t: v(DROP_X - 0.5, -1.55, BZ), r: 5.2, yaw: 0.5, pitch: 0.3 },
-    { p: 0.50, t: a(0, 0.42, 0), r: 3.6, yaw: 0.4, pitch: 0.26 },
-    { p: 0.62, t: a(0, 0.5, 0), r: 2.3, yaw: 0.65, pitch: 0.2 },
-    { p: 0.76, t: FOCUS.clone().add(v(0, 0.02, 0)), r: 0.2, yaw: 0.75, pitch: 0.12 },
-    { p: 1.00, t: FOCUS.clone().add(v(0, 0.02, 0)), r: 0.2, yaw: 0.75, pitch: 0.12 },
+    { p: 0.00, ...roomView, r: 21, yaw: 0.8 },
+    { p: 0.045, ...roomView },
+    { p: 0.08, ...roomView, r: 17.5, yaw: 0.5 },
+    { p: 0.14, ...rackView },
+    { p: 0.185, ...rackView, yaw: 0.06 },
+    { p: 0.24, ...encView },
+    { p: 0.28, ...encView, yaw: -0.3 },
+    { p: 0.345, ...ctrlView },
+    { p: 0.385, ...ctrlView, yaw: 0.14 },
+    { p: 0.445, ...table1 },
+    { p: 0.47, ...table1, yaw: 0.1 },
+    { p: 0.525, ...table2 },
+    { p: 0.55, ...table2, yaw: -0.04 },
+    { p: O(0.34), t: v(2.45, 0.5, BZ), r: 2.7, yaw: 0.5, pitch: 0.3 },
+    { p: O(0.50), t: aw(0, 0.34, 0), r: 1.8, yaw: 0.4, pitch: 0.26 },
+    { p: O(0.62), t: aw(0, 0.4, 0), r: 1.15, yaw: 0.65, pitch: 0.2 },
+    { p: O(0.76), t: FOCUS_W.clone().add(v(0, 0.01, 0)), r: 0.1, yaw: 0.75, pitch: 0.12 },
+    { p: 1.00, t: FOCUS_W.clone().add(v(0, 0.01, 0)), r: 0.1, yaw: 0.75, pitch: 0.12 },
   ];
   const view = { t: v(0, 0, 0), r: 8, yaw: 0, pitch: 0.6 };
   function viewAt(p) {
@@ -544,7 +589,10 @@ export function createScene(canvas, options = {}) {
   let dragYaw = 0, dragPitch = 0, rMult = 1;
   let dragging = false, lastX = 0, lastY = 0, idleSince = 0, time = 3.2;
   let progT = 0, prog = 0;
+  // 'card': a fixed preview inside a link (home page): no labels, no drag-to-orbit
+  let card = false;
   canvas.addEventListener('pointerdown', (e) => {
+    if (card) return;
     dragging = true; lastX = e.clientX; lastY = e.clientY;
     canvas.setPointerCapture?.(e.pointerId);
     canvas.classList.add('is-grabbing');
@@ -587,20 +635,30 @@ export function createScene(canvas, options = {}) {
     if (!reducedMotion) time += dt;
     prog = reducedMotion || !dt ? progT : prog + (progT - prog) * damp(6, dt);
     const p = prog;
-    // labels: optics first, then the AFM module
-    const aOptics = 1 - smoothstep(0.22, 0.32, p);
-    const aAfm = smoothstep(0.4, 0.48, p) * (1 - smoothstep(0.62, 0.68, p));
+    // the lab room first; then labels: optics, then the AFM module
+    const roomFade = 1 - smoothstep(0.39, 0.435, p);
+    const fogT = smoothstep(0.39, 0.45, p);
+    scene.fog.near = lerp(30, 8, fogT);
+    scene.fog.far = lerp(45, 14, fogT);
+    const aOptics = smoothstep(0.4, 0.44, p) * (1 - smoothstep(O(0.22), O(0.32), p));
+    const aAfm = smoothstep(O(0.3), O(0.38), p) * (1 - smoothstep(O(0.66), O(0.72), p));
+    const aPeri = smoothstep(0.4, 0.44, p) * (1 - smoothstep(O(0.46), O(0.52), p));   // stays for "down to the sample"
+    // on phones the AFM labels start large (the module is small in the frame) and ease back as the camera closes in
+    const afmPhone = lerp(1.9, 1.5, smoothstep(O(0.42), O(0.62), p));
     labels.forEach((s) => {
-      const al2 = s.userData.group === 'afm' ? aAfm : aOptics;
+      const g = s.userData.group;
+      s.scale.copy(s.userData.base).multiplyScalar(small ? (g === 'afm' ? afmPhone : 1.45) : 1);
+      const al2 = g === 'afm' ? aAfm : g === 'peri' ? aPeri : aOptics;
       s.material.opacity = al2;
-      s.visible = al2 > 0.01 && !(small && s.userData.minor);
+      s.visible = !card && al2 > 0.01 && !(small && s.userData.minor);
     });
-    const black = smoothstep(0.72, 0.79, p) * (1 - smoothstep(0.8, 0.87, p));
+    const black = smoothstep(O(0.72), O(0.79), p) * (1 - smoothstep(O(0.8), O(0.87), p));
     veil.style.opacity = black.toFixed(3);
     const pulseFlash = () => Math.exp(-(((time * SPEED - greenPath.total) % GAP + GAP) % GAP / SPEED) * 5);
-    if (p < 0.795) {
-      placePulses(greenPulses, time, 0.6);
-      placePulses(redPulses, time, 0.6);
+    if (p < O(0.795)) {
+      room.update(time, p, roomFade, small, reducedMotion, !card);
+      placePulses(greenPulses, time, 0.75);
+      placePulses(redPulses, time, 0.75);
       scan(time);
       const flash = pulseFlash();
       nvGlow.material.opacity = 0.45 + 0.55 * flash;
@@ -611,7 +669,7 @@ export function createScene(canvas, options = {}) {
     } else {
       // close-up: scrolling sweeps the tip across the stripline; with the microwave on the σ+ line
       // the NV dims over the σ+ (left) wave and stays bright over the σ− (right) one
-      const u = smoothstep(0.82, 0.98, p);
+      const u = smoothstep(O(0.82), O(0.98), p);
       const tx = lerp(2.4, -2.4, u);
       waveU.uTime.value = time;
       mProbe.position.set(tx, reducedMotion ? 0 : Math.sin(time * 1.1) * 0.03, 0);
@@ -646,8 +704,7 @@ export function createScene(canvas, options = {}) {
     });
     rMult = aspect < 0.8 ? 1.35 : aspect < 1.5 ? 1.12 : 1;
     small = width < 640;
-    const ls = small ? 1.45 : 1;
-    labels.forEach((s) => s.scale.copy(s.userData.base).multiplyScalar(ls));
+    labels.forEach((s) => { s.center.x = small ? s.userData.phoneAnchor : 0.5; });
     if (!loop.running) renderOnce();
   }
   const unobserve = observeResize(canvas, resize);
@@ -655,7 +712,13 @@ export function createScene(canvas, options = {}) {
 
   return {
     setProgress(pv) { progT = clamp(pv); if (!loop.running) renderOnce(); },
-    setParam() {},
+    setParam(name, value) {
+      if (name === 'layout') {
+        card = value === 'card';
+        for (const s of mLabels) s.visible = !card;
+        if (!loop.running) renderOnce();
+      }
+    },
     resize,
     start() { if (reducedMotion) { renderOnce(); return; } loop.start(); },
     stop() { loop.stop(); },

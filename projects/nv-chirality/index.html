@@ -40,7 +40,7 @@
         <a class="rail__seg rail__seg--sub" href="#ch-detect"><span class="rail__label"><span class="rail__pre">Physics · </span>Detection</span><span class="rail__track"><span class="rail__fill"></span></span></a>
         <a class="rail__seg rail__seg--sub" href="#playground"><span class="rail__label"><span class="rail__pre">Physics · </span>Try it</span><span class="rail__track"><span class="rail__fill"></span></span></a>
       </div>
-      <a class="rail__seg" href="#microscope"><span class="rail__label"><span class="rail__num">02</span> Instrument</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#instrument"><span class="rail__label"><span class="rail__num">02</span> Instrument</span><span class="rail__track"><span class="rail__fill"></span></span></a>
       <a class="rail__seg" href="#role"><span class="rail__label"><span class="rail__num">03</span> My role</span><span class="rail__track"><span class="rail__fill"></span></span></a>
     </nav>
   </header>
@@ -53,7 +53,7 @@
       <p class="hero__sub">A single quantum spin in diamond can tell which way a magnetic wave is turning — and so which way it is going.</p>
       <div class="cta-row">
         <a class="btn btn--primary" href="#ch-sensor">Watch it work</a>
-        <a class="btn btn--secondary" href="#microscope">See the instrument</a>
+        <a class="btn btn--secondary" href="../nv-microscope/index.html">See the instrument</a>
       </div>
       <dl class="hero__spec hero__spec--3">
         <div><dt>Authors</dt><dd><strong>Enbo Zhang</strong>, Tiancheng Zheng, Bo-Yuan Yang, Shreyes Nallan, Mark Ku, Jian-Gang Zhu</dd></div>
@@ -284,81 +284,17 @@
       </div>
     </section>
 
-    <!-- The microscope (before the paper) -->
-    <section id="microscope" class="section microscope" aria-labelledby="microscope-title">
-      <div class="container--wide">
+    <!-- The instrument: walked through on its own page (P-03) -->
+    <section id="instrument" class="section microscope" aria-labelledby="instrument-title">
+      <div class="container">
         <div class="lockup" data-reveal>
           <p class="eyebrow c-nv">The instrument</p>
-          <h2 class="headline" id="microscope-title">I built the microscope.</h2>
-          <p class="subhead">A scanning NV-centre microscope, assembled from components and tuned by hand — the tool behind the data that follows.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="scene-setup" class="scene" data-scene="lab-setup" aria-labelledby="scene-setup-title">
-      <h2 class="visually-hidden" id="scene-setup-title">A 3D model of the instrument, from the laser to the probe tip</h2>
-      <div class="scene__sticky">
-        <canvas class="scene__canvas setup__canvas" aria-hidden="true"></canvas>
-        <div class="scene__fade scene__fade--top"></div>
-        <div class="scene__fade scene__fade--bottom"></div>
-        <div class="scene__beats">
-          <div class="beat beat--bottom beat--compact" data-start="0.02" data-end="0.22">
-            <p class="beat__eyebrow">The optics</p>
-            <h3 class="beat__title">Green light, built from parts.</h3>
-            <p class="beat__text">A 532 nm laser, pulsed by an acousto-optic modulator and carried by fibre to the microscope table. A dichroic, a galvo scanner and relay lenses steer it; the red glow comes back the same way to a single-photon counter.</p>
-          </div>
-          <div class="beat beat--bottom beat--compact" data-start="0.27" data-end="0.47">
-            <p class="beat__eyebrow">Down to the sample</p>
-            <h3 class="beat__title">Follow the beam.</h3>
-            <p class="beat__text">A periscope drops the beam into the objective of the AFM. Underneath, a stick-slip coarse stage and a closed-loop piezo scanner raster the sample, nanometre by nanometre.</p>
-          </div>
-          <div class="beat beat--bottom beat--compact" data-start="0.52" data-end="0.70">
-            <p class="beat__eyebrow">The probe</p>
-            <h3 class="beat__title">A diamond on a tuning fork.</h3>
-            <p class="beat__text">The NV probe hangs from the top on a quartz tuning fork, which holds the diamond tip nanometres above the film. A waveguide probe lands on the stripline to launch the spin waves.</p>
-          </div>
-          <div class="beat beat--bottom beat--compact" data-start="0.84" data-end="1.00">
-            <p class="beat__eyebrow">At the tip</p>
-            <h3 class="beat__title">One spin, reading the waves.</h3>
-            <p class="beat__text">A single NV centre at the apex, above the YIG film. With the microwave on the <span class="sigma-plus">σ+</span> line it dims over the left-going wave and stays bright over the <span class="sigma-minus">σ−</span> one.</p>
+          <h2 class="headline" id="instrument-title">I built the microscope.</h2>
+          <p class="subhead">A scanning NV-centre microscope, assembled from components, tuned by hand and run by software I wrote. Its walk-through, from the shielded room down to the probe tip, has its own page.</p>
+          <div class="cta-row">
+            <a class="btn btn--primary" href="../nv-microscope/index.html">Walk through the instrument</a>
           </div>
         </div>
-        <div class="scene__fallback">
-          <p>The interactive 3D view isn't available in this browser. The instrument: a 532 nm laser, half-wave plate, beam splitter and acousto-optic modulator, coupled by fibre to a dichroic mirror, galvo scanner and 4f relay, then a periscope down into a 50x objective. Under the objective, the AFM: the NV probe on a tuning fork above the sample, which sits on stick-slip coarse stages and a piezo XYZ scanner, with a waveguide probe on the stripline. Red light returns through the dichroic to a single-photon counter.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section microscope microscope--after" aria-label="About the instrument">
-      <div class="container--wide">
-        <div class="tiles" data-reveal-group>
-          <div class="tile tile--2 stat">
-            <p class="stat__label">Sensor</p>
-            <p class="stat__value c-nv-red">One spin</p>
-            <p class="stat__note">A single nitrogen-vacancy centre at the tip of a diamond probe.</p>
-          </div>
-          <div class="tile tile--2 stat">
-            <p class="stat__label">Resolution</p>
-            <p class="stat__value">Nanoscale</p>
-            <p class="stat__note">The sensor rides nanometres above the sample on an atomic-force probe.</p>
-          </div>
-          <div class="tile tile--2 stat">
-            <p class="stat__label">Conditions</p>
-            <p class="stat__value">Room temperature</p>
-            <p class="stat__note">No cryostat. A green laser in, red light out.</p>
-          </div>
-          <div class="tile tile--3 stat">
-            <p class="stat__label">Built from</p>
-            <p class="stat__value">Components</p>
-            <p class="stat__note">Tuning-fork force sensing, confocal optics, single-photon counting and a microwave chain, integrated into one scanning system.</p>
-          </div>
-          <div class="tile tile--3 stat tile--wide-md">
-            <p class="stat__label">Readout</p>
-            <p class="stat__value">Light</p>
-            <p class="stat__note">The sensor dims when it feels the right microwave field. Brightness is the signal.</p>
-          </div>
-        </div>
-        <p class="section__caption" data-reveal>Instrument design, construction, experiments, nanofabrication, analysis and writing: Enbo Zhang.</p>
       </div>
     </section>
 
