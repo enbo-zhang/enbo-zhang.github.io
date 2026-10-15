@@ -1995,3 +1995,231 @@ html:has(.page-project .gnav__rail) { scroll-padding-top: var(--nav-h); }
   .skill { grid-template-columns: minmax(0, 1fr); row-gap: var(--sp-3); padding: var(--sp-5) 0; }
   .skill__body { padding-top: 0; }
 }
+
+/* --------------------------------------------------------------------------
+   Micrographs (project page) — ruled groups like Skills. Images are always shown whole (never cropped
+   or covered: each has a scale bar drawn in); a transparent button over each opens the lightbox.
+   -------------------------------------------------------------------------- */
+/* home card for the micrographs: a real image instead of a scene, contained so its scale bar stays in */
+.project-card__visual--micro { --pad: clamp(20px, 3vw, 40px); }
+.project-card__visual--micro img {
+  position: absolute;
+  top: var(--pad); left: var(--pad);
+  width: calc(100% - 2 * var(--pad));
+  height: calc(100% - 2 * var(--pad));
+  object-fit: contain;
+}
+.mgroup {
+  display: grid;
+  row-gap: var(--sp-7);
+  padding: var(--sp-6) 0 var(--sp-8);
+  border-top: 1px solid var(--c-border);
+}
+.mgroup:last-child { border-bottom: 1px solid var(--c-border); }
+.mgroup__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sp-2) var(--sp-4); min-width: 0; }
+.mgroup__idx,
+.mgroup__note {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--c-text-3);
+}
+.mgroup__note { margin-left: auto; text-transform: uppercase; }
+.mgroup__title {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+  font-weight: var(--fw-semibold);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--c-text-1);
+}
+:is(.micrographs, .hero__spec) sub { font-size: 0.7em; line-height: 0; vertical-align: -0.25em; }
+
+.micro { margin: 0; min-width: 0; }
+.micro__frame {
+  position: relative;
+  background: #000;
+  border: 1px solid var(--c-border);
+  transition: border-color var(--dur-fast) var(--ease-standard);
+}
+.micro__frame img { width: 100%; height: auto; }
+.micro__open {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  cursor: zoom-in;
+}
+.micro__open::after {                             /* hover / focus tag; sits in a corner, off the scale bars */
+  content: "Enlarge +";
+  position: absolute;
+  top: 8px; right: 8px;
+  padding: 5px 7px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.72);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-text-1);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-standard);
+}
+.micro__open:focus-visible { border-radius: 0; }
+.micro__open:focus-visible::after { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .micro__frame:hover { border-color: rgba(255, 255, 255, 0.34); }
+  .micro__frame:hover .micro__open::after { opacity: 1; }
+}
+.micro__text { padding-top: var(--sp-4); max-width: 62ch; }
+.micro__title {
+  margin: 0;
+  font-size: var(--fs-body-lg);
+  font-weight: var(--fw-semibold);
+  line-height: 1.3;
+  color: var(--c-text-1);
+}
+.micro__caption {
+  margin: var(--sp-2) 0 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--c-text-2);
+}
+.micro__credit {
+  margin: var(--sp-3) 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--c-text-3);
+}
+/* plate: image on the left (never narrower than 340px, so the SEM dots stay resolved), text beside it */
+.micro--plate {
+  display: grid;
+  grid-template-columns: minmax(340px, 480px) minmax(0, 1fr);
+  column-gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+.micro--plate .micro__text { padding-top: 0; max-width: 44ch; }
+/* pair: column widths in proportion to the images' aspect ratios (1.236 : 1.503) so they share a height */
+.micro-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1.236fr) minmax(0, 1.503fr);
+  gap: var(--sp-7) var(--tile-gap);
+  align-items: start;
+}
+@media (max-width: 734px) {
+  .mgroup { row-gap: var(--sp-6); padding: var(--sp-5) 0 var(--sp-7); }
+  .mgroup__note { margin-left: 0; flex-basis: 100%; }
+  .micro--plate { grid-template-columns: minmax(0, 1fr); }
+  .micro--plate .micro__text { padding-top: var(--sp-4); }
+  .micro-pair { grid-template-columns: minmax(0, 1fr); row-gap: var(--sp-6); }
+}
+
+/* lightbox for micrographs: dark frame instead of the paper panel, plus a credit line */
+dialog.lightbox--dark .lightbox__panel { background: #000; border: 1px solid var(--c-border); padding: 0; border-radius: 0; }
+dialog.lightbox--dark .lightbox__panel img { border-radius: 0; max-width: 92vw; }
+.lightbox__credit:empty { display: none; }
+.lightbox__credit {
+  margin-top: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--c-text-3);
+}
+@media (max-width: 734px) {
+  dialog.lightbox--dark .lightbox__panel { padding: 0; }
+  dialog.lightbox--dark .lightbox__panel img { max-width: calc(100vw - 2 * var(--gutter)); }
+}
+
+/* 3D model beside a plate micrograph: the model matches the image's height, the caption sits under the
+   image and the stage buttons under the model. site.js mounts the scene ([data-scene-fixed]) and wires
+   the buttons; if WebGL fails (or there's no JS) the plate falls back to image + caption side by side. */
+.micro--model {
+  grid-template-areas: "frame view" "text bar";
+  row-gap: var(--sp-4);
+}
+.micro--model > .micro__frame { grid-area: frame; align-self: start; }
+.micro--model > .micro__text { grid-area: text; padding-top: 0; }
+.mmodel__view {
+  grid-area: view;
+  align-self: stretch;
+  position: relative;
+  min-width: 0;
+  min-height: 300px;
+  background: #000;
+  border: 1px solid var(--c-border);
+  overflow: hidden;
+}
+.mmodel__canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  touch-action: pan-y;          /* horizontal drag rotates; vertical swipes still scroll the page */
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+}
+.mmodel__canvas:active { cursor: grabbing; }
+.mmodel__view.is-ready .mmodel__canvas { opacity: 1; }
+.mmodel__bar {
+  grid-area: bar;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-self: start;
+  gap: 6px;
+  min-width: 0;
+}
+.mmodel__tag {
+  flex-basis: 100%;
+  margin: 0 0 var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-text-3);
+}
+.mmodel__stage,
+.mmodel__play {
+  padding: 6px 10px;
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--c-text-2);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard),
+    background-color var(--dur-fast) var(--ease-standard);
+}
+.mmodel__stage[aria-pressed="true"] {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--c-surface-2);
+  color: var(--c-text-1);
+}
+.mmodel__play { margin-left: auto; border-color: transparent; color: var(--c-text-3); }
+@media (hover: hover) and (pointer: fine) {
+  .mmodel__stage:hover,
+  .mmodel__play:hover { border-color: var(--c-border-strong); color: var(--c-text-1); }
+}
+/* fallbacks: no WebGL / no JS → the plain plate */
+.no-js .micro--model .mmodel__view, .no-js .micro--model .mmodel__bar,
+.no-js .micro__open,
+.micro--model:has(> .mmodel__view.is-failed) .mmodel__view,
+.micro--model:has(> .mmodel__view.is-failed) .mmodel__bar { display: none; }
+.no-js .micro--model,
+.micro--model:has(> .mmodel__view.is-failed) { grid-template-areas: none; }
+.no-js .micro--model > *,
+.micro--model:has(> .mmodel__view.is-failed) > * { grid-area: auto; }
+/* tablet: image + caption side by side, model full width beneath */
+@media (max-width: 1068px) and (min-width: 735px) {
+  .micro--model { grid-template-areas: "frame text" "view view" "bar bar"; row-gap: var(--sp-5); }
+  .micro--model > .micro__text { align-self: start; }
+  .mmodel__view { min-height: 0; aspect-ratio: 2 / 1; }
+  .mmodel__bar { margin-top: calc(var(--sp-2) - var(--sp-5)); }
+}
+/* phone: one column — image, caption, model, buttons */
+@media (max-width: 734px) {
+  .micro--model { grid-template-areas: "frame" "text" "view" "bar"; }
+  .micro--model > .micro__text { padding-top: 0; }
+  .mmodel__view { min-height: 0; aspect-ratio: 4 / 3; margin-top: var(--sp-3); }
+}

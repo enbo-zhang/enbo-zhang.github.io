@@ -594,6 +594,31 @@ function initFixedScenes() {
 }
 
 /* ------------------------------------------------------------------------ */
+/* Micrograph models: stage buttons + pause under each 3D model             */
+/* ------------------------------------------------------------------------ */
+// The scene steps through its stages on its own and fires `model:stage` on its canvas;
+// a click jumps to that stage (the scene holds it a while, then carries on).
+function initModelStages() {
+  $$('.mmodel__bar').forEach((bar) => {
+    const host = bar.closest('.micro')?.querySelector('[data-scene-fixed]');
+    const canvas = host && $('canvas', host);
+    if (!canvas) return;
+    const stages = $$('.mmodel__stage', bar);
+    const mark = (i) => stages.forEach((b, j) => b.setAttribute('aria-pressed', String(j === i)));
+    canvas.addEventListener('model:stage', (e) => mark(Number(e.detail?.index) || 0));
+    stages.forEach((b, i) => b.addEventListener('click', () => { mark(i); setParamOn(host, 'stage', i); }));
+    const play = $('.mmodel__play', bar);
+    if (!play) return;
+    if (reducedMotion) { play.hidden = true; return; }
+    play.addEventListener('click', () => {
+      const paused = play.textContent.trim() === 'Pause';
+      play.textContent = paused ? 'Play' : 'Pause';
+      setParamOn(host, 'autoplay', !paused);
+    });
+  });
+}
+
+/* ------------------------------------------------------------------------ */
 /* Segmented controls + switches                                            */
 /* ------------------------------------------------------------------------ */
 function positionThumb(group, instant = false) {
@@ -694,7 +719,8 @@ function initSwitches() {
 /* ------------------------------------------------------------------------ */
 function initLightbox() {
   const dialog = $('dialog.lightbox');
-  const cards = $$('.figure-card');
+  // Paper figures (.figure-card, the whole card is the button) or micrographs (.micro__open over the image).
+  const cards = $$('.figure-card, .micro__open');
   if (!dialog || !cards.length) return;
   if (typeof dialog.showModal !== 'function') {
     // Very old browsers: open the full image directly.
@@ -704,19 +730,27 @@ function initLightbox() {
   const img = $('.lightbox__img', dialog);
   const title = $('.lightbox__title', dialog);
   const text = $('.lightbox__text', dialog);
+  const credit = $('.lightbox__credit', dialog);
   let index = 0;
   let opener = null;
+  // Copy nodes, not text, so markup such as Mn<sub>3</sub>Sn survives.
+  const fill = (target, source) => {
+    if (target) target.replaceChildren(...(source ? Array.from(source.childNodes, (n) => n.cloneNode(true)) : []));
+  };
 
   const show = (i) => {
     index = (i + cards.length) % cards.length;
     const card = cards[index];
-    const thumb = $('img', card);
+    const fig = card.closest('figure') || card;
+    const thumb = $('img', fig);
     img.src = card.dataset.full;
     img.width = Number(card.dataset.fullW) || 2000;
     img.height = Number(card.dataset.fullH) || 1400;
     img.alt = thumb?.alt || '';
-    title.textContent = $('.figure-card__title', card)?.textContent || '';
-    text.textContent = $('.figure-card__caption', card)?.textContent || '';
+    dialog.classList.toggle('lightbox--dark', card.classList.contains('micro__open'));
+    fill(title, $('.figure-card__title, .micro__title', fig));
+    fill(text, $('.figure-card__caption, .micro__caption', fig));
+    fill(credit, $('.micro__credit', fig));
   };
 
   cards.forEach((card, i) => card.addEventListener('click', () => {
@@ -777,6 +811,7 @@ function boot() {
   initSwitches();
   initStickyScenes();
   initFixedScenes();
+  initModelStages();
   initStepper();
   initRailTicks();
   initLightbox();
