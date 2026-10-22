@@ -102,6 +102,7 @@ strong { color: var(--c-text-1); font-weight: var(--fw-semibold); }
 .c-gold { color: var(--c-gold); }
 .c-heat { color: var(--c-heat); }
 .c-hbn  { color: var(--c-hbn); }
+.c-xray { color: var(--c-xray); }
 .c-text-2 { color: var(--c-text-2); }
 
 /* --------------------------------------------------------------------------
@@ -1506,6 +1507,7 @@ dialog.lightbox[open]::backdrop { animation: fade-in var(--dur-base) var(--ease-
 .page-project .section__caption { font-family: var(--font-mono); font-size: 12px; }
 .hero__spec--3 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); max-width: 960px; width: 100%; }
 .hero__spec dd strong { font-weight: 600; }
+@media (min-width: 735px) { .page-hamr .hero__spec--3 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); max-width: 1180px; } }
 @media (max-width: 734px) { .hero__spec--3 { grid-template-columns: 1fr; } }
 
 /* Playground: bias-field slider + ODMR spectrum ---------------------------- */
@@ -1783,6 +1785,86 @@ dialog.lightbox[open]::backdrop { animation: fade-in var(--dur-base) var(--ease-
 /* HAMR page: scroll length follows how much each storyboard moves (see data-pace on each scene) */
 .page-hamr #scene-write { --scene-h: 500vh; }
 .page-hamr #scene-media { --scene-h: 440vh; }
+.page-hamr #scene-xrr { --scene-h: 540vh; }
+
+/* HAMR page, XRR chapter: the reference TEM from the paper, image beside its caption */
+.xrr-fig {
+  margin: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: end;
+}
+.xrr-fig--wide { grid-template-columns: minmax(0, 620px) minmax(0, 1fr); }   /* landscape image (media chapter) */
+.xrr-fig__frame { background: #000; border: 1px solid var(--c-border); }
+.xrr-fig__frame img { display: block; width: 100%; height: auto; }
+.xrr-fig__cap { display: flex; flex-direction: column; gap: var(--sp-2); max-width: 44ch; }
+.xrr-fig__label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-text-3); }
+.xrr-fig__title { font-size: var(--fs-body-lg); font-weight: var(--fw-semibold); color: var(--c-text-1); }
+.xrr-fig__text { font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-text-2); }
+@media (max-width: 1068px) {
+  .xrr-fig--wide { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 734px) {
+  .xrr-fig { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* HAMR page, XRR chapter: how each length is read off the curve (numbered rows), the fit, and the limits */
+.xrr-steps { list-style: none; margin: var(--sp-8) 0 0; padding: 0; }
+.xrr-step {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: clamp(1.5rem, 5vw, 5rem);
+  padding: var(--sp-6) 0;
+  border-top: 1px solid var(--c-border);
+}
+.xrr-step:last-child { border-bottom: 1px solid var(--c-border); }
+.xrr-step__head { display: flex; align-items: baseline; gap: var(--sp-4); min-width: 0; }
+.xrr-step__idx { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--c-xray); }
+.xrr-step__title {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+  font-weight: var(--fw-semibold);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--c-text-1);
+}
+.xrr-step__body { min-width: 0; display: flex; flex-direction: column; gap: var(--sp-3); max-width: 60ch; }
+.xrr-step__body p { margin: 0; font-size: var(--fs-body); line-height: var(--lh-body); color: var(--c-text-2); }
+.xrr-step__body .xrr-step__what {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-3);
+}
+.xrr-step__body .xrr-step__eq {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sp-2) var(--sp-4);
+  font-family: var(--font-mono); font-size: 15px; color: var(--c-text-1);
+}
+.xrr-step__eq span { font-size: 12px; color: var(--c-text-3); }
+.xrr-fit { margin-top: var(--sp-8); max-width: 72ch; }
+.xrr-fit p { margin: 0; font-size: var(--fs-body); line-height: var(--lh-body); color: var(--c-text-2); }
+.xrr-fit .xrr-fit__label,
+.xrr-limits__label {
+  margin: 0 0 var(--sp-3);
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-3);
+}
+.xrr-limits {
+  margin-top: var(--sp-8);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-5) clamp(1rem, 2.5vw, 2rem);
+}
+.xrr-limits__label { grid-column: 1 / -1; margin: 0; }
+.xrr-limit { border-top: 1px solid var(--c-border); padding-top: var(--sp-4); }
+.xrr-limit p { margin: 0; font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-text-2); }
+.xrr-limit .xrr-limit__title { margin-bottom: var(--sp-2); font-size: var(--fs-body); font-weight: var(--fw-semibold); color: var(--c-text-1); }
+@media (max-width: 1068px) {
+  .xrr-limits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 734px) {
+  .xrr-steps { margin-top: var(--sp-7); }
+  .xrr-step { grid-template-columns: minmax(0, 1fr); row-gap: var(--sp-3); padding: var(--sp-5) 0; }
+  .xrr-limits { grid-template-columns: minmax(0, 1fr); }
+}
 
 /* Project pages: the section rail is a vertical bar in the top-left corner. Each part is a short dash;
    the current part grows tall and bright, with dots for its scroll stops (keyframes, added by site.js). */

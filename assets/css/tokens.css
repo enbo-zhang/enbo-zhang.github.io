@@ -56,6 +56,7 @@
   --c-gold:            #d4af37;   /* gold stripline */
   --c-heat:            #ed6925;   /* HAMR heat (inferno orange) */
   --c-hbn:             #bfe9ff;   /* h-BN sheets (ice cyan) */
+  --c-xray:            #b69cff;   /* X-ray beam (XRR chapter, violet) */
 
   /* Soft (tinted) variants for chips, tile washes, toggle thumbs */
   --c-sigma-plus-soft:  rgba(255, 55, 95, 0.16);

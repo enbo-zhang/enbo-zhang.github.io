@@ -35,8 +35,9 @@
       <a class="rail__seg" href="#overview"><span class="rail__label"><span class="rail__num">00</span> Intro</span><span class="rail__track"><span class="rail__fill"></span></span></a>
       <a class="rail__seg" href="#ch-hamr"><span class="rail__label"><span class="rail__num">01</span> HAMR</span><span class="rail__track"><span class="rail__fill"></span></span></a>
       <a class="rail__seg" href="#ch-media"><span class="rail__label"><span class="rail__num">02</span> Media</span><span class="rail__track"><span class="rail__fill"></span></span></a>
-      <a class="rail__seg" href="#ch-measure"><span class="rail__label"><span class="rail__num">03</span> Measurement</span><span class="rail__track"><span class="rail__fill"></span></span></a>
-      <a class="rail__seg" href="#paper"><span class="rail__label"><span class="rail__num">04</span> Paper</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#ch-xrr"><span class="rail__label"><span class="rail__num">03</span> X-ray</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#ch-measure"><span class="rail__label"><span class="rail__num">04</span> Measurement</span><span class="rail__track"><span class="rail__fill"></span></span></a>
+      <a class="rail__seg" href="#paper"><span class="rail__label"><span class="rail__num">05</span> Paper</span><span class="rail__track"><span class="rail__fill"></span></span></a>
     </nav>
   </header>
 
@@ -52,7 +53,8 @@
       </div>
       <dl class="hero__spec hero__spec--3">
         <div><dt>Authors</dt><dd>Chengchao Xu, <strong>Enbo Zhang</strong>, Bo-Yuan Yang, B. S. D. Ch. S. Varaprasad, David E. Laughlin, Jian-Gang Zhu</dd></div>
-        <div><dt>Published</dt><dd>IEEE Transactions on Magnetics</dd><dd>Carnegie Mellon University</dd></div>
+        <div><dt>Published</dt><dd>IEEE Transactions on Magnetics 61(4), 2025</dd><dd>Carnegie Mellon University</dd></div>
+        <div><dt>Result</dt><dd class="c-heat">0.60 W/m·K across the stack</dd><dd>Less than window glass</dd></div>
       </dl>
       <div class="hero__cue" aria-hidden="true">Scroll</div>
     </section>
@@ -148,7 +150,7 @@
           <div class="beat beat--bottom beat--compact beat--corner-bl" data-start="0.82" data-end="1.00">
             <p class="beat__eyebrow">Compare</p>
             <h3 class="beat__title">h-BN or carbon?</h3>
-            <p class="beat__text">With a conventional carbon boundary, heat spreads sideways and the hot spot's edge goes soft.</p>
+            <p class="beat__text">With a conventional carbon boundary, heat spreads sideways and the hot spot's edge goes soft. A 1 nm <span class="c-hbn">h-BN</span> wall resists heat about twice as much as 1 nm of carbon (carbon value measured by Ho et al.).</p>
           </div>
         </div>
         <div class="scene__controls" data-show-from="0.82">
@@ -165,13 +167,192 @@
       </div>
     </section>
 
-    <!-- Chapter 3: Measurement -->
+    <section id="media-grains" class="section media-grains" aria-labelledby="media-grains-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow">Seen from above</p>
+          <h2 class="headline" id="media-grains-title">The real film, grain by grain.</h2>
+          <p class="subhead">An electron micrograph looking straight down on FePt-(<span class="c-hbn">h-BN</span>) media. Every grain sits inside its own ring of <span class="c-hbn">h-BN</span>.</p>
+        </div>
+        <div class="tiles" data-reveal-group>
+          <figure class="tile tile--6 xrr-fig xrr-fig--wide">
+            <div class="xrr-fig__frame">
+              <img src="../../assets/img/hamr/plan-view-grains.jpg" width="1040" height="721" loading="lazy" decoding="async" alt="Greyscale top-down micrograph: about a dozen dark, roughly round grains packed side by side, each surrounded by several thin bright concentric rings. Fine lattice lines are visible inside the grains and along the rings. A 5 nm scale bar sits at the lower right.">
+            </div>
+            <figcaption class="xrr-fig__cap">
+              <span class="xrr-fig__label">Reference · plane-view TEM</span>
+              <span class="xrr-fig__title">FePt grains, walled in by <span class="c-hbn">h-BN</span>.</span>
+              <span class="xrr-fig__text">The dark disks are L1₀ FePt grains, under 7 nm across. The bright rings around them are <span class="c-hbn">h-BN</span> sheets, about 1 nm wide, wrapped around each grain. Every grain is separated from its neighbours by <span class="c-hbn">h-BN</span>, so heat moving sideways has to cross those sheets. High-resolution TEM, reproduced from Fig. 1(d) of the paper.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 3: X-ray reflectivity -->
+    <section id="ch-xrr" class="section chapter" aria-labelledby="ch-xrr-title">
+      <div class="container">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow c-xray">Chapter 3</p>
+          <h2 class="headline" id="ch-xrr-title">Counting layers with X-rays.</h2>
+          <p class="subhead">Before putting a number on each interface, you need to know the stack: how thick each layer is, and how many there are.</p>
+        </div>
+      </div>
+      <div class="container--wide">
+        <div class="tiles" data-reveal-group>
+          <figure class="tile tile--6 xrr-fig">
+            <div class="xrr-fig__frame">
+              <img src="../../assets/img/hamr/tem-13L.jpg" width="472" height="501" loading="lazy" decoding="async" alt="Greyscale cross-section of the multilayer: thirteen thin bright horizontal lines, evenly spaced, separated by darker grey bands, between a capping layer at the top and an underlayer at the bottom. Labels mark FePt 6.5 nm, h-BN 2.5 nm, the Ta/Ru underlayer, the Ta/SiO₂ capping, and a 20 nm scale bar.">
+            </div>
+            <figcaption class="xrr-fig__cap">
+              <span class="xrr-fig__label">The real stack · cross-section TEM</span>
+              <span class="xrr-fig__title">The 13-period sample, side on.</span>
+              <span class="xrr-fig__text">Bright lines are the h-BN layers; the darker bands between them are FePt. TEM shows one thin slice. Below, X-rays measure the same thicknesses across the whole film. Bright-field TEM, reproduced from Fig. 3(a) of the paper. © IEEE.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-xrr" class="scene" data-scene="xrr" aria-labelledby="scene-xrr-title">
+      <h2 class="visually-hidden" id="scene-xrr-title">How X-ray reflectivity measures the layer thicknesses of the multilayer</h2>
+      <div class="scene__sticky">
+        <canvas class="scene__canvas" aria-hidden="true"></canvas>
+        <div class="scene__fade scene__fade--top"></div>
+        <div class="scene__fade scene__fade--bottom"></div>
+        <div class="scene__beats">
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.02" data-end="0.17">
+            <p class="beat__eyebrow">X-ray reflectivity</p>
+            <h3 class="beat__title">A beam that barely grazes the film.</h3>
+            <p class="beat__text">X-rays strike the stack at a glancing angle of a degree or two, and a detector on the other side collects what bounces off. The angle is exaggerated here.</p>
+          </div>
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.21" data-end="0.37">
+            <p class="beat__eyebrow">Interference</p>
+            <h3 class="beat__title">Every interface reflects a little.</h3>
+            <p class="beat__text">Each boundary between <span class="c-hbn">h-BN</span> and FePt sends back a weak copy of the beam. The copies travel different distances, so at some angles they add up and at others they cancel.</p>
+          </div>
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.41" data-end="0.59">
+            <p class="beat__eyebrow">Scan the angle</p>
+            <h3 class="beat__title">Peaks for the period, fringes for the whole.</h3>
+            <p class="beat__text">The tall superlattice peaks are spaced by the repeat period. The small fringes between them are set by the thickness of the whole stack: ideally N − 2 of them for N periods.</p>
+          </div>
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.62" data-end="0.79">
+            <p class="beat__eyebrow">The measured curves</p>
+            <h3 class="beat__title">More periods, more fringes.</h3>
+            <p class="beat__text">The paper's scans of the 4-, 7-, 10- and 13-period samples. Superlattice peaks are clear from 7 periods up. The fringe counts, 2, 5, 8 and 10, track N − 2; the thickest stack is one short.</p>
+          </div>
+          <div class="beat beat--top-left beat--top-mobile" data-start="0.83" data-end="1.00">
+            <p class="beat__eyebrow">Checked against TEM</p>
+            <h3 class="beat__title">Same stack, seen two ways.</h3>
+            <p class="beat__text">Fits to the X-ray curves give a period of 8.7 to 9.5 nm across the samples. A cross-section TEM of the 13-period sample shows about 9.3 nm.</p>
+          </div>
+        </div>
+        <div class="scene__fallback">
+          <p>The animated view isn't available in this browser. In X-ray reflectivity, X-rays strike the [h-BN/FePt]×N multilayer at a grazing angle. Each interface reflects part of the beam, and the reflections interfere: sweeping the angle gives tall superlattice peaks, spaced by the layer period, with small Kiessig fringes between them set by the total thickness. The measured curves of the 4-, 7-, 10- and 13-period samples show 2, 5, 8 and 10 fringes. Fits gave a period of 8.7 to 9.5 nm, in agreement with the cross-section TEM above.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="xrr-read" class="section xrr-read" aria-labelledby="xrr-read-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow">Reading thickness off the curve</p>
+          <h2 class="headline" id="xrr-read-title">One scan, three lengths.</h2>
+          <p class="subhead">Each feature of the curve ties to a length. At these small angles the rule is the same every time: angle spacing ≈ wavelength ÷ length. Cu Kα X-rays have λ = 0.154 nm.</p>
+        </div>
+        <ol class="xrr-steps" data-reveal-group>
+          <li class="xrr-step">
+            <div class="xrr-step__head"><span class="xrr-step__idx">01</span><h3 class="xrr-step__title">Total thickness</h3></div>
+            <div class="xrr-step__body">
+              <p class="xrr-step__what">From the Kiessig fringes</p>
+              <p>The top and bottom of the film reflect like the two faces of a soap film, giving small, evenly spaced fringes. Thicker film, closer fringes.</p>
+              <p class="xrr-step__eq">D ≈ λ / Δ(2θ)<span>a 120 nm film: fringes ≈ 0.07° apart</span></p>
+            </div>
+          </li>
+          <li class="xrr-step">
+            <div class="xrr-step__head"><span class="xrr-step__idx">02</span><h3 class="xrr-step__title">Repeat period</h3></div>
+            <div class="xrr-step__body">
+              <p class="xrr-step__what">From the superlattice peaks</p>
+              <p>The repeating <span class="c-hbn">h-BN</span>/FePt pairs act like planes in a crystal and give tall peaks. Same rule; a period is much thinner than the film, so the peaks sit much farther apart.</p>
+              <p class="xrr-step__eq">Λ ≈ λ / Δ(2θ)<span>a 9 nm period: peaks ≈ 1° apart</span></p>
+            </div>
+          </li>
+          <li class="xrr-step">
+            <div class="xrr-step__head"><span class="xrr-step__idx">03</span><h3 class="xrr-step__title">The split inside a period</h3></div>
+            <div class="xrr-step__body">
+              <p class="xrr-step__what">From the peak heights, by fitting</p>
+              <p>The split between <span class="c-hbn">h-BN</span> and FePt changes how tall the peaks are, not where they sit, so it comes from a fit rather than a spacing. Design: 2.5 nm <span class="c-hbn">h-BN</span> + 6.5 nm FePt.</p>
+            </div>
+          </li>
+          <li class="xrr-step">
+            <div class="xrr-step__head"><span class="xrr-step__idx">04</span><h3 class="xrr-step__title">A count to check</h3></div>
+            <div class="xrr-step__body">
+              <p class="xrr-step__what">Fringes between two peaks</p>
+              <p>N periods give N − 2 fringes between neighbouring peaks, a check that needs no fit. The four samples show 2, 5, 8 and 10.</p>
+              <p class="xrr-step__eq">fringes = N − 2<span>13 → 11 expected, 10 seen</span></p>
+            </div>
+          </li>
+        </ol>
+        <div class="xrr-fit" data-reveal>
+          <p class="xrr-fit__label">The full fit</p>
+          <p>The spacings give starting values. The final numbers come from a layer-by-layer model (thickness, density and roughness for each layer) whose calculated curve is fitted to the measured one. Density sets where the reflection first drops; roughness sets how fast the curve falls. The fits give a period of 8.7 to 9.5 nm.</p>
+        </div>
+        <div class="xrr-limits" data-reveal-group>
+          <p class="xrr-limits__label">Where XRR stops working</p>
+          <div class="xrr-limit">
+            <p class="xrr-limit__title">Rough interfaces</p>
+            <p>Roughness fades the fringes, first at high angles. It likely explains the missing fringe in the 13-period sample.</p>
+          </div>
+          <div class="xrr-limit">
+            <p class="xrr-limit__title">Very thick films</p>
+            <p>Past a few hundred nanometres the fringes sit too close to resolve.</p>
+          </div>
+          <div class="xrr-limit">
+            <p class="xrr-limit__title">Weak contrast</p>
+            <p>An interface reflects only if the density changes across it. <span class="c-hbn">h-BN</span> and FePt differ strongly, so the peaks here are bright.</p>
+          </div>
+          <div class="xrr-limit">
+            <p class="xrr-limit__title">It averages</p>
+            <p>The beam covers millimetres of film, so XRR gives an average. TEM shows one slice, so the two go together.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="xrr-result" class="section xrr-result" aria-labelledby="xrr-result-title">
+      <div class="container--wide">
+        <div class="lockup" data-reveal>
+          <p class="eyebrow">What the X-rays measured</p>
+          <h2 class="headline" id="xrr-result-title">The stack is the stack we meant to grow.</h2>
+          <p class="subhead">X-rays average over the whole area under the beam; TEM looks at one thin slice. The two agree.</p>
+        </div>
+        <div class="tiles" data-reveal-group>
+          <div class="tile tile--2 stat">
+            <p class="stat__label">Repeat period</p>
+            <p class="stat__value c-xray">8.7–9.5 nm</p>
+            <p class="stat__note">From fits to the XRR curves of the 4-, 7-, 10- and 13-period samples.</p>
+          </div>
+          <div class="tile tile--2 stat">
+            <p class="stat__label">Designed period</p>
+            <p class="stat__value"><span class="c-hbn">2.5</span> + 6.5 nm</p>
+            <p class="stat__note">An h-BN layer plus an L1₀ FePt layer, as designed. TEM shows about 9.3 nm per period.</p>
+          </div>
+          <div class="tile tile--2 stat tile--wide-md">
+            <p class="stat__label">Fringes counted</p>
+            <p class="stat__value">2 · 5 · 8 · 10</p>
+            <p class="stat__note">For 4, 7, 10 and 13 periods. Ideally N − 2; the thickest stack is one short, likely from roughness that builds up toward the top.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 4: Measurement -->
     <section id="ch-measure" class="section chapter" aria-labelledby="ch-measure-title">
       <div class="container">
         <div class="lockup" data-reveal>
-          <p class="eyebrow c-gold">Chapter 3</p>
+          <p class="eyebrow c-gold">Chapter 4</p>
           <h2 class="headline" id="ch-measure-title">Measuring heat across a few atoms.</h2>
-          <p class="subhead">Stack the interface many times over, then time how heat gets through it.</p>
+          <p class="subhead">Stack the interface many times over, then measure how hard it is for heat to get through.</p>
         </div>
       </div>
     </section>
@@ -216,17 +397,17 @@
         <div class="lockup" data-reveal>
           <p class="eyebrow">The result</p>
           <h2 class="headline" id="results-title">Very little heat gets through.</h2>
-          <p class="subhead">Mostly metal, yet across the stack it conducts heat less well than window glass.</p>
+          <p class="subhead">Mostly metal, yet across the stack it conducts heat less well than window glass. Over 80% of the resistance sits at the interfaces.</p>
         </div>
         <div class="tiles" data-reveal-group>
           <div class="tile tile--3 stat">
             <p class="stat__label">Effective conductivity, cross-plane</p>
-            <p class="stat__value c-heat">0.60 W/m·K</p>
+            <p class="stat__value c-heat">0.60 ± 0.05 W/m·K</p>
             <p class="stat__note">For the [h-BN/FePt] multilayer, from differential 3ω measurements.</p>
           </div>
           <div class="tile tile--3 stat">
             <p class="stat__label">Interface conductance</p>
-            <p class="stat__value c-hbn">≈ 68 MW/m²·K</p>
+            <p class="stat__value c-hbn">67.9 ± 6.6 MW/m²·K</p>
             <p class="stat__note">Across FePt / h-BN / FePt at room temperature: weak van der Waals bonding.</p>
           </div>
           <div class="tile tile--2 stat">
@@ -254,7 +435,7 @@
         <div class="lockup" data-reveal>
           <p class="eyebrow">The paper</p>
           <h2 class="headline" id="paper-title">Ultralow thermal conductance across the [FePt/h-BN/FePt] interface.</h2>
-          <p class="subhead">C. Xu, E. Zhang, B.-Y. Yang, B. S. D. Ch. S. Varaprasad, D. E. Laughlin, J.-G. Zhu. IEEE Transactions on Magnetics.</p>
+          <p class="subhead">C. Xu, E. Zhang, B.-Y. Yang, B. S. D. Ch. S. Varaprasad, D. E. Laughlin, J.-G. Zhu. IEEE Transactions on Magnetics 61(4), 2025.</p>
           <div class="cta-row">
             <a class="btn btn--primary" href="https://ieeexplore.ieee.org/abstract/document/10716709" rel="noopener noreferrer" target="_blank">IEEE Xplore</a>
             <a class="btn btn--secondary" href="https://arxiv.org/abs/2406.13085" rel="noopener noreferrer" target="_blank">arXiv preprint</a>
@@ -269,7 +450,7 @@
         <div class="lockup" data-reveal>
           <p class="eyebrow">My role</p>
           <h2 class="headline" id="role-title">Co-author, at the Data Storage Systems Center.</h2>
-          <p class="subhead">Part of the Carnegie Mellon team developing FePt-(h-BN) media for heat-assisted recording.</p>
+          <p class="subhead">I built the differential 3ω measurement station and validated it against silicon, as part of the Carnegie Mellon team developing FePt-(h-BN) media for heat-assisted recording.</p>
         </div>
         <div class="tiles" data-reveal-group>
           <div class="tile tile--6 role-block">
