@@ -1842,28 +1842,13 @@ dialog.lightbox[open]::backdrop { animation: fade-in var(--dur-base) var(--ease-
 .xrr-step__eq span { font-size: 12px; color: var(--c-text-3); }
 .xrr-fit { margin-top: var(--sp-8); max-width: 72ch; }
 .xrr-fit p { margin: 0; font-size: var(--fs-body); line-height: var(--lh-body); color: var(--c-text-2); }
-.xrr-fit .xrr-fit__label,
-.xrr-limits__label {
+.xrr-fit .xrr-fit__label {
   margin: 0 0 var(--sp-3);
   font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-3);
-}
-.xrr-limits {
-  margin-top: var(--sp-8);
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--sp-5) clamp(1rem, 2.5vw, 2rem);
-}
-.xrr-limits__label { grid-column: 1 / -1; margin: 0; }
-.xrr-limit { border-top: 1px solid var(--c-border); padding-top: var(--sp-4); }
-.xrr-limit p { margin: 0; font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-text-2); }
-.xrr-limit .xrr-limit__title { margin-bottom: var(--sp-2); font-size: var(--fs-body); font-weight: var(--fw-semibold); color: var(--c-text-1); }
-@media (max-width: 1068px) {
-  .xrr-limits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 734px) {
   .xrr-steps { margin-top: var(--sp-7); }
   .xrr-step { grid-template-columns: minmax(0, 1fr); row-gap: var(--sp-3); padding: var(--sp-5) 0; }
-  .xrr-limits { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* Project pages: the section rail is a vertical bar in the top-left corner. Each part is a short dash;
